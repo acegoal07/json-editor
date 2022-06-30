@@ -15,6 +15,42 @@
 npm i @acegoal07/json-editor
 ```
 
+## Example
+```js
+const jsonEditor = require("@acegoal07/json-editor");
+
+let file = jsonEditor("display.json", {autosave: true});
+// file content = {}
+
+file.set("Hello", "world!");
+file.set("toggle", true);
+file.set("data", []);
+// {
+//   "Hello": "world!",
+//   "toggle": true,
+//   "data": []
+// }
+
+console.log(file.get("Hello"))
+// log => world!
+
+file.append("data", "test");
+file.append("data", "test2");
+file.unset("Hello");
+// {
+//   "data": [
+//       "test",
+//       "test2"
+//   ]
+// }
+
+file.emptyArray("data")
+// {"data": []}
+
+file.empty()
+// {}
+```
+
 ## Documentation
 ### `JsonEditor(path, options)`
 <h4>Params</h4>
