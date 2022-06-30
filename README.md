@@ -6,7 +6,7 @@
    <img alt="Libraries.io dependency status for latest release" src="https://img.shields.io/github/issues-raw/acegoal07/json-editor">
    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/acegoal07/json-editor">
    <img alt="Monthly Downloads" src="https://img.shields.io/npm/dm/@acegoal07/json-editor">
-</div><br>
+</div>
 
 ---
 
@@ -15,10 +15,11 @@
 npm i @acegoal07/json-editor
 ```
 
+## Documentation
 ### `JsonEditor(path, options)`
 <h4>Params</h4>
 
-- `path` - A string to show the location of the file<br>
+- `path` - A string to show the location of the file
 - `options` - A object of custom options for the editor:
 <h4>Options</h4>
 
@@ -30,23 +31,155 @@ npm i @acegoal07/json-editor
 <h4>Return</h4>
 
 - Returns an instance of the `JsonEditor`
+
+<!-- save !-->
 ### `.save(callback)`
 Saves the file and any changes
 <h4>Params</h4>
 
-- 'callback' - An optional callback function which will turn the function into an asynchronous one
+- `callback` - An optional callback function which will turn the function into an asynchronous one
 <h4>Return</h4>
 
 - Returns an instance of the `JsonEditor`
+<br>
+
+
+
+<!-- write !-->
 ### `.write(content, callback)`
+Write the JSON file
+<h4>Params</h4>
+
+- `content` - The data you would like to write to the json file
+- `callback` - An optional callback function which will turn the function into an asynchronous one
+<h4>Return</h4>
+
+- Returns an instance of the `JsonEditor`
+<br>
+
+
+
+<!-- get !-->
 ### `.get(path)`
+Get a value in a specific path or the whole json document
+<h4>Params</h4>
+
+- `path` - The object path
+<h4>Return</h4>
+
+- Returns the object path value
+<br>
+
+
+
+<!-- empty !-->
 ### `.empty(callback)`
+Empty the JSON file content
+<h4>Params</h4>
+
+- `callback` - An optional callback function which will turn the function into an asynchronous one
+<h4>Return</h4>
+
+- Returns an instance of the `JsonEditor`
+<br>
+
+
+
+<!-- read !-->
 ### `.read(callback)`
+<h4>Params</h4>
+
+- `callback` - An optional callback function which will turn the function into an asynchronous one
+<h4>Return</h4>
+<br>
+
+
+
+<!-- toObject !-->
 ### `.toObject()`
+<h4>Return</h4>
+<br>
+
+
+
+<!-- toString !-->
 ### `.toString(joiner)`
+<h4>Params</h4>
+
+- `joiner` - The character that will be used to join the data
+<h4>Return</h4>
+<br>
+
+
+
+<!-- set !-->
 ### `.set(path, value, options)`
+<h4>Params</h4>
+
+- `path` - The object path
+- `value` - The data you want to put into the json file
+<h4>Return</h4>
+
+- Returns an instance of the `JsonEditor`
+<br>
+
+
+
+<!-- unset !-->
 ### `.unset(path)`
+<h4>Params</h4>
+
+- `path` - The object path
+<h4>Return</h4>
+
+- Returns an instance of the `JsonEditor`
+<br>
+
+
+
+<!-- append !-->
 ### `.append(path, value)`
+<h4>Params</h4>
+
+- `path` - The object path
+- `value` - The data you want to put into the json file
+<h4>Return</h4>
+
+- Returns an instance of the `JsonEditor`
+<br>
+
+
+
+<!-- popFirst !-->
 ### `.popFirst(path)`
+<h4>Params</h4>
+
+- `path` - The object path
+<h4>Return</h4>
+
+- Returns an instance of the `JsonEditor`
+<br>
+
+
+
+<!-- popTo !-->
 ### `.popTo(path, position)`
+<h4>Params</h4>
+
+- `path` - The object path
+- `position` - The position of the item you want to remove
+<h4>Return</h4>
+
+- Returns an instance of the `JsonEditor`
+<br>
+
+
+
+<!-- popLast !-->
 ### `.popLast(path)`
+<h4>Params</h4>
+
+- `path` - The object path
+<h4>Return</h4>
+
+- Returns an instance of the `JsonEditor`

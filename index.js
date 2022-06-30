@@ -78,7 +78,18 @@ class JsonEditor {
    empty(callback) {
       return this.write("{}", callback)
    }
- 
+
+   /**
+    * Empty an arrays content
+    * 
+    * @param {String} path The object path
+    */
+   emptyArray(path) {
+      if (!path) {
+         throw  new Error("You did not provide a path")
+      }
+      return this.set(path, []);
+   }
 
    /**
     * Read the JSON file
@@ -119,6 +130,9 @@ class JsonEditor {
       if (!Array.isArray(data)) {
          throw new Error("The data is not an array!");
       }
+      if (!joiner) {
+         throw new Error("No joiner was provided");
+      }
       return this.data.join(joiner);
    }
    
@@ -153,6 +167,9 @@ class JsonEditor {
     * @returns {JsonEditor} The `JsonEditor` instance
     */
    unset(path) {
+      if (!path) {
+         throw  new Error("You did not provide a path")
+      }
       return this.set(path, undefined)
    }
 
@@ -165,6 +182,9 @@ class JsonEditor {
     * @returns {JsonEditor} The `JsonEditor` instance
     */
    append(path, value) {
+      if (!path) {
+         throw  new Error("You did not provide a path")
+      }
       let data = this.get(path);
       data = (data === undefined) ? [] : data;
          if (!Array.isArray(data)) {
@@ -182,6 +202,9 @@ class JsonEditor {
     * @returns {JsonEditor} The `JsonEditor` instance
     */
    popLast(path) {
+      if (!path) {
+         throw  new Error("You did not provide a path")
+      }
       const data = this.get(path);
       if (!Array.isArray(data)) {
          throw new Error('The data is not an array!');
@@ -199,6 +222,9 @@ class JsonEditor {
     * @returns {JsonEditor} The `JsonEditor` instance
     */
    popTo(path, position) {
+      if (!path) {
+         throw  new Error("You did not provide a path")
+      }
       const data = this.get(path);
       if (!Array.isArray(data)) {
          throw new Error('The data is not an array!');
@@ -213,11 +239,14 @@ class JsonEditor {
 
    /**
     * Remove the first item from an array
-    *
+    * 
     * @param {String} path The object path
-    * @returns {JsonEditor} The `JsonEditor` instance.
+    * @returns {JsonEditor} The `JsonEditor` instance
     */
    popFirst(path) {
+      if (!path) {
+         throw  new Error("You did not provide a path")
+      }
       const data = this.get(path);
       if (!Array.isArray(data)) {
          throw new Error('The data is not an array!');
@@ -246,8 +275,11 @@ class JsonEditor {
  *  - `ignore_dots` (Boolean): Whether to use the path including dots or have an object structure (default: `false`)
  *  - `autosave` (Boolean): Save the file when setting some data in it
  * 
- * @return {JsonEditor} The `JsonEditor` instance
+ * @return {jsonEditor} The `JsonEditor` instance
  */
-module.exports = function JsonEditor(path, options) {
+module.exports = function jsonEditor(path, options) {
+   if (!path) {
+      throw  new Error("You did not provide a path")
+   }
    return new JsonEditor(path, options);
 }
