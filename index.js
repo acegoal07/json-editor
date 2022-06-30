@@ -8,24 +8,16 @@ const os = require('os');
 class JsonEditor {
 
    /**
-    * @name JsonEditor
-    * @param {String}
-    * @param {Object}
-    *
-    *  - `stringify_width` (Number): The JSON stringify indent width (default: `2`).
-    *  - `stringify_fn` (Function): A function used by `JSON.stringify`.
-    *  - `stringify_eol` (Boolean): Whether to add the new line at the end of the file or not (default: `false`)
-    *  - `ignore_dots` (Boolean): Whether to use the path including dots or have an object structure (default: `false`)
-    *  - `autosave` (Boolean): Save the file when setting some data in it.
-    *
-    * @returns {JsonEditor}
+    * @param {String} path The object path
+    * @param {Object} options The options for set-value (applied only when {ignore_dots} file option is false)
+    * @returns {JsonEditor} The `JsonEditor` instance
     */
    constructor (path, options) {
       this.options = options = options || {}
-      options.stringify_width = options.stringify_width || 2
-      options.stringify_fn = options.stringify_fn || null
-      options.stringify_eol = options.stringify_eol || false
-      options.ignore_dots = options.ignore_dots || false;
+         options.stringify_width = options.stringify_width || 2
+         options.stringify_fn = options.stringify_fn || null
+         options.stringify_eol = options.stringify_eol || false
+         options.ignore_dots = options.ignore_dots || false;
       this.path = path
       this.data = this.read()
    }
@@ -33,8 +25,8 @@ class JsonEditor {
    /**
      * Saves the file and any changes
      *
-     * @param {Function} callback
-     * @returns {JsonEditor}
+     * @param {Function} callback An optional callback function which will turn the function into an asynchronous one
+     * @returns {JsonEditor} The `JsonEditor` instance
      */
    save(callback) {
       const data = JSON.stringify(
@@ -48,10 +40,10 @@ class JsonEditor {
    }
 
    /**
-    * Get a value in a specific path.
+    * Get a value in a specific path
     *
-    * @param {String} path
-    * @returns {Value} The object path value.
+    * @param {String} path The object path
+    * @returns {Value} The object path value
     */
    get(path) {
       if (path) {
@@ -63,11 +55,11 @@ class JsonEditor {
       return this.toObject()
    }
    /**
-    * Write the JSON file.
+    * Write the JSON file
     *
-    * @param {String} The file content.
-    * @param {Function} callback An optional callback function which will turn the function into an asynchronous one.
-    * @returns {JsonEditor} The `JsonEditor` instance.
+    * @param {String} content file content
+    * @param {Function} callback An optional callback function which will turn the function into an asynchronous one
+    * @returns {JsonEditor} The `JsonEditor` instance
     */
    write(content, callback) {
       if (callback) {
@@ -79,9 +71,9 @@ class JsonEditor {
    }
  
    /**
-    * Empty the JSON file content.
+    * Empty the JSON file content
     *
-    * @param {Function} callback The callback function.
+    * @param {Function} callback The callback function
     */
    empty(callback) {
       return this.write("{}", callback)
@@ -89,10 +81,10 @@ class JsonEditor {
  
 
    /**
-    * Read the JSON file.
+    * Read the JSON file
     *
-    * @param {Function} callback An optional callback function which will turn the function into an asynchronous one.
-    * @returns {Object} The object parsed as object or an empty object by default.
+    * @param {Function} callback An optional callback function which will turn the function into an asynchronous one
+    * @returns {Object} The object parsed as object or an empty object by default
     */
    read(callback) {
       if (!callback) {
@@ -109,23 +101,34 @@ class JsonEditor {
    }
 
    /**
-    * toObject
-    *
-    * @name toObject
-    * @function
-    * @returns {Object} The data object.
+    * Returns a object from the data path
+    * 
+    * @returns {Object} The data object
     */
    toObject() {
       return this.data
+   }
+
+   /**
+    * Returns a joined string from the array path
+    * 
+    * @param {String} joiner The character to join the data with
+    * @returns {String} The data string
+    */
+   toString(joiner) {
+      if (!Array.isArray(data)) {
+         throw new Error("The data is not an array!");
+      }
+      return this.data.join(joiner);
    }
    
    /**
     * Set a value in a specific path
     *
-    * @param {String} path The object path.
-    * @param {Anything} value The value.
+    * @param {String} path The object path
+    * @param {Anything} value The value
     * @param {Object} options The options for set-value (applied only when {ignore_dots} file option is false)
-    * @returns {JsonEditor} The `JsonEditor` instance.
+    * @returns {JsonEditor} The `JsonEditor` instance
     */
    set(path, value, options) {
       if (typeof path === "object") {
@@ -144,22 +147,22 @@ class JsonEditor {
    }
 
    /**
-    * Remove a path from a JSON object.
+    * Remove a path from a JSON object
     *
-    * @param {String} path The object path.
-    * @returns {JsonEditor} The `JsonEditor` instance.
+    * @param {String} path The object path
+    * @returns {JsonEditor} The `JsonEditor` instance
     */
-    unset(path) {
+   unset(path) {
       return this.set(path, undefined)
    }
 
    /**
-    * Appends a value/object to a specific path.
-    * If the path is empty it wil create a list.
+    * Appends a value/object to a specific path
+    * If the path is empty it wil create a list
     *
-    * @param {String} path The object path.
-    * @param {Anything} value The value.
-    * @returns {JsonEditor} The `JsonEditor` instance.
+    * @param {String} path The object path
+    * @param {Anything} value The value
+    * @returns {JsonEditor} The `JsonEditor` instance
     */
    append(path, value) {
       let data = this.get(path);
@@ -175,8 +178,8 @@ class JsonEditor {
    /**
     * Remove the last item from an array
     *
-    * @param {String} path The object path.
-    * @returns {JsonEditor} The `JsonEditor` instance.
+    * @param {String} path The object path
+    * @returns {JsonEditor} The `JsonEditor` instance
     */
    popLast(path) {
       const data = this.get(path);
@@ -191,9 +194,9 @@ class JsonEditor {
    /**
     * Removes a specific item from an array
     *
-    * @param {String} path The object path.
+    * @param {String} path The object path
     * @param {Number} position The position of the item
-    * @returns {JsonEditor} The `JsonEditor` instance.
+    * @returns {JsonEditor} The `JsonEditor` instance
     */
    popTo(path, position) {
       const data = this.get(path);
@@ -211,7 +214,7 @@ class JsonEditor {
    /**
     * Remove the first item from an array
     *
-    * @param {String} path The object path.
+    * @param {String} path The object path
     * @returns {JsonEditor} The `JsonEditor` instance.
     */
    popFirst(path) {
@@ -226,9 +229,9 @@ class JsonEditor {
 }
 
 /**
- * Edit a json file.
+ * Edit a json file
  *
- * @param {String} path The path to the JSON file.
+ * @param {String} path The path to the JSON file
  * @param {{
  *    stringify_width?: Number,
  *    stringify_fn?: Function,
@@ -236,8 +239,15 @@ class JsonEditor {
  *    ignore_dots?: Boolean,
  *    autosave?: Boolean
  * }} options An object containing the following fields:
- * @return {JsonEditor} The `JsonEditor` instance.
+ * 
+ *  - `stringify_width` (Number): The JSON stringify indent width (default: `2`)
+ *  - `stringify_fn` (Function): A function used by `JSON.stringify`
+ *  - `stringify_eol` (Boolean): Whether to add the new line at the end of the file or not (default: `false`)
+ *  - `ignore_dots` (Boolean): Whether to use the path including dots or have an object structure (default: `false`)
+ *  - `autosave` (Boolean): Save the file when setting some data in it
+ * 
+ * @return {JsonEditor} The `JsonEditor` instance
  */
-module.exports = function jsonEditor(path, options) {
+module.exports = function JsonEditor(path, options) {
    return new JsonEditor(path, options);
 }
