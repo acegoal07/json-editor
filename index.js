@@ -1,9 +1,9 @@
-const findValue = require("find-value");
-const setValue = require("set-value");
-const rJson = require("r-json");
-const fs = require("fs");
-const iterateObject = require("iterate-object");
-const os = require('os');
+const findValue = require("find-value"),
+   setValue = require("set-value"),
+   rJson = require("r-json"),
+   fs = require("fs"),
+   iterateObject = require("iterate-object"),
+   os = require('os');
 
 class JsonEditor {
 

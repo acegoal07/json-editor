@@ -87,33 +87,43 @@ Empty the JSON file content
 
 <!-- read !-->
 ### `.read(callback)`
+Read the JSON file
 <h4>Params</h4>
 
 - `callback` - An optional callback function which will turn the function into an asynchronous one
 <h4>Return</h4>
+
+- Returns the data from the json file
 <br>
 
 
 
 <!-- toObject !-->
 ### `.toObject()`
+Returns a object from the data path
 <h4>Return</h4>
+
+- Returns the data from the json file as a object
 <br>
 
 
 
 <!-- toString !-->
 ### `.toString(joiner)`
+Returns a joined string from the array path
 <h4>Params</h4>
 
 - `joiner` - The character that will be used to join the data
 <h4>Return</h4>
+
+- Returns a joined string from the array path
 <br>
 
 
 
 <!-- set !-->
 ### `.set(path, value, options)`
+Set a value in a specific path
 <h4>Params</h4>
 
 - `path` - The object path
@@ -127,6 +137,7 @@ Empty the JSON file content
 
 <!-- unset !-->
 ### `.unset(path)`
+Remove a path from a JSON object
 <h4>Params</h4>
 
 - `path` - The object path
@@ -139,6 +150,7 @@ Empty the JSON file content
 
 <!-- append !-->
 ### `.append(path, value)`
+Appends a value/object to a specific path, If the path is empty it wil create a list
 <h4>Params</h4>
 
 - `path` - The object path
@@ -152,6 +164,7 @@ Empty the JSON file content
 
 <!-- popFirst !-->
 ### `.popFirst(path)`
+Remove the first item from an array
 <h4>Params</h4>
 
 - `path` - The object path
@@ -164,6 +177,7 @@ Empty the JSON file content
 
 <!-- popTo !-->
 ### `.popTo(path, position)`
+Removes a specific item from an array
 <h4>Params</h4>
 
 - `path` - The object path
@@ -177,6 +191,7 @@ Empty the JSON file content
 
 <!-- popLast !-->
 ### `.popLast(path)`
+Remove the last item from an array
 <h4>Params</h4>
 
 - `path` - The object path
