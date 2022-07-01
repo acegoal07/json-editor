@@ -88,9 +88,26 @@ class JsonEditor {
       if (!path) {
          throw  new Error("You did not provide a path")
       }
+      const data = this.get(path);
+      if (!Array.isArray(data)) {
+         throw new Error("The data is not an array!");
+      }
       return this.set(path, []);
    }
 
+   /**
+    * 
+    */
+   emptyObject(path) {
+      if (!path) {
+         throw  new Error("You did not provide a path")
+      }
+      const data = this.get(path)
+      if (typeof data !== "object") {
+         throw new Error("The data is not an object")
+      }
+      return this.set(path, {});
+   }
    /**
     * Read the JSON file
     *
@@ -117,7 +134,7 @@ class JsonEditor {
     * @returns {Object} The data object
     */
    toObject() {
-      return this.data
+      return this.data;
    }
 
    /**
@@ -126,14 +143,15 @@ class JsonEditor {
     * @param {String} joiner The character to join the data with
     * @returns {String} The data string
     */
-   toString(joiner) {
+   toString(path, joiner) {
+      const data = this.get(path);
       if (!Array.isArray(data)) {
          throw new Error("The data is not an array!");
       }
       if (!joiner) {
          throw new Error("No joiner was provided");
       }
-      return this.data.join(joiner);
+      return data.join(joiner);
    }
    
    /**
