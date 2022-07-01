@@ -144,6 +144,19 @@ Returns a object from the data path
 
 
 
+<!-- toObject !-->
+### `.toString(path, joiner)`
+Returns a object from the data path
+<h4>Params</h4>
+
+- `path` - The object path
+- `joiner` - The character to join the data with
+<h4>Return</h4>
+
+- Returns a string of data
+<br>
+
+
 <!-- toString !-->
 ### `.toString(joiner)`
 Returns a joined string from the array path

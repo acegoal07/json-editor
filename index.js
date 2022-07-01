@@ -69,7 +69,7 @@ class JsonEditor {
       }
       return this
    }
- 
+
    /**
     * Empty the JSON file content
     *
@@ -81,12 +81,12 @@ class JsonEditor {
 
    /**
     * Empty an arrays content
-    * 
+    *
     * @param {String} path The object path
     */
    emptyArray(path) {
       if (!path) {
-         throw  new Error("You did not provide a path")
+         throw new Error("You did not provide a path")
       }
       const data = this.get(path);
       if (!Array.isArray(data)) {
@@ -96,11 +96,11 @@ class JsonEditor {
    }
 
    /**
-    * 
+    *
     */
    emptyObject(path) {
       if (!path) {
-         throw  new Error("You did not provide a path")
+         throw new Error("You did not provide a path")
       }
       const data = this.get(path)
       if (typeof data !== "object") {
@@ -130,7 +130,7 @@ class JsonEditor {
 
    /**
     * Returns a object from the data path
-    * 
+    *
     * @returns {Object} The data object
     */
    toObject() {
@@ -139,7 +139,8 @@ class JsonEditor {
 
    /**
     * Returns a joined string from the array path
-    * 
+    *
+    * @param {String} path The object path
     * @param {String} joiner The character to join the data with
     * @returns {String} The data string
     */
@@ -153,7 +154,7 @@ class JsonEditor {
       }
       return data.join(joiner);
    }
-   
+
    /**
     * Set a value in a specific path
     *
@@ -163,6 +164,9 @@ class JsonEditor {
     * @returns {JsonEditor} The `JsonEditor` instance
     */
    set(path, value, options) {
+      if (!path) {
+         throw new Error("You did not provide a path")
+      }
       if (typeof path === "object") {
          iterateObject(path, (iValue, n) => {
             setValue(this.data, n, iValue, options);
@@ -186,7 +190,7 @@ class JsonEditor {
     */
    unset(path) {
       if (!path) {
-         throw  new Error("You did not provide a path")
+         throw new Error("You did not provide a path")
       }
       return this.set(path, undefined)
    }
@@ -201,7 +205,7 @@ class JsonEditor {
     */
    append(path, value) {
       if (!path) {
-         throw  new Error("You did not provide a path")
+         throw new Error("You did not provide a path")
       }
       let data = this.get(path);
       data = (data === undefined) ? [] : data;
@@ -221,7 +225,7 @@ class JsonEditor {
     */
    popLast(path) {
       if (!path) {
-         throw  new Error("You did not provide a path")
+         throw new Error("You did not provide a path")
       }
       const data = this.get(path);
       if (!Array.isArray(data)) {
@@ -241,7 +245,7 @@ class JsonEditor {
     */
    popTo(path, position) {
       if (!path) {
-         throw  new Error("You did not provide a path")
+         throw new Error("You did not provide a path")
       }
       const data = this.get(path);
       if (!Array.isArray(data)) {
@@ -257,13 +261,13 @@ class JsonEditor {
 
    /**
     * Remove the first item from an array
-    * 
+    *
     * @param {String} path The object path
     * @returns {JsonEditor} The `JsonEditor` instance
     */
    popFirst(path) {
       if (!path) {
-         throw  new Error("You did not provide a path")
+         throw new Error("You did not provide a path")
       }
       const data = this.get(path);
       if (!Array.isArray(data)) {
@@ -286,18 +290,18 @@ class JsonEditor {
  *    ignore_dots?: Boolean,
  *    autosave?: Boolean
  * }} options An object containing the following fields:
- * 
+ *
  *  - `stringify_width` (Number): The JSON stringify indent width (default: `2`)
  *  - `stringify_fn` (Function): A function used by `JSON.stringify`
  *  - `stringify_eol` (Boolean): Whether to add the new line at the end of the file or not (default: `false`)
  *  - `ignore_dots` (Boolean): Whether to use the path including dots or have an object structure (default: `false`)
  *  - `autosave` (Boolean): Save the file when setting some data in it
- * 
+ *
  * @return {jsonEditor} The `JsonEditor` instance
  */
 module.exports = function jsonEditor(path, options) {
    if (!path) {
-      throw  new Error("You did not provide a path")
+      throw new Error("You did not provide a path")
    }
    return new JsonEditor(path, options);
 }
