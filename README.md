@@ -15,6 +15,11 @@
 npm i @acegoal07/json-editor
 ```
 
+## About
+This project is not yet published and is not fully tested so use this code at your own risk
+
+If you w
+
 ## Example
 ```js
 const jsonEditor = require("@acegoal07/json-editor");
@@ -36,16 +41,21 @@ console.log(file.get("Hello"))
 
 file.append("data", "test");
 file.append("data", "test2");
+file.set("items", {"world": "world!"});
 file.unset("Hello");
 // {
 //   "data": [
 //       "test",
 //       "test2"
-//   ]
+//   ],
+//   "items": {
+//       "world": "world!"
+//   }
 // }
 
-file.emptyArray("data")
-// {"data": []}
+file.emptyArray("data");
+file.emptyObject("items");
+// {"data": [], "items": {}}
 
 file.empty()
 // {}
@@ -114,6 +124,32 @@ Empty the JSON file content
 <h4>Params</h4>
 
 - `callback` - An optional callback function which will turn the function into an asynchronous one
+<h4>Return</h4>
+
+- Returns an instance of the `JsonEditor`
+<br>
+
+
+
+<!-- empty !-->
+### `.emptyArray(path)`
+Removes all the items from an array
+<h4>Params</h4>
+
+- `path` - The object path
+<h4>Return</h4>
+
+- Returns an instance of the `JsonEditor`
+<br>
+
+
+
+<!-- empty !-->
+### `.emptyObject(path)`
+Removes all the items from a object
+<h4>Params</h4>
+
+- `path` - The object path
 <h4>Return</h4>
 
 - Returns an instance of the `JsonEditor`

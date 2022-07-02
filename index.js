@@ -4,17 +4,31 @@ const findValue = require("find-value"),
    fs = require("fs"),
    iterateObject = require("iterate-object"),
    os = require('os');
-
-class JsonEditor {
-
+   
+module.exports = class JsonEditor {
    /**
-    * @param {String} path The object path
-    * @param {Object} options The options for set-value (applied only when {ignore_dots} file option is false)
-    * @returns {JsonEditor} The `JsonEditor` instance
+    * Edit a json file
+    *
+    * @param {String} path The path to the JSON file
+    * @param {{
+    *    stringify_width?: Number,
+    *    stringify_fn?: Function,
+    *    stringify_eol?: Boolean,
+    *    ignore_dots?: Boolean,
+    *    autosave?: Boolean
+    * }} options An object containing the following fields:
+    *
+    *  - `stringify_width` (Number): The JSON stringify indent width (default: `2`)
+    *  - `stringify_fn` (Function): A function used by `JSON.stringify`
+    *  - `stringify_eol` (Boolean): Whether to add the new line at the end of the file or not (default: `false`)
+    *  - `ignore_dots` (Boolean): Whether to use the path including dots or have an object structure (default: `false`)
+    *  - `autosave` (Boolean): Save the file when setting some data in it
+    *
+    * @return {jsonEditor} The `JsonEditor` instance
     */
    constructor (path, options) {
       this.options = options = options || {}
-         options.stringify_width = options.stringify_width || 2
+         options.stringify_width = options.stringify_width || 3
          options.stringify_fn = options.stringify_fn || null
          options.stringify_eol = options.stringify_eol || false
          options.ignore_dots = options.ignore_dots || false;
@@ -145,7 +159,12 @@ class JsonEditor {
     * @returns {String} The data string
     */
    toString(path, joiner) {
-      const data = this.get(path);
+      let data;
+      if (!path) {
+         data = this.data;
+      } else {
+         data = this.get(path);         
+      }
       if (!Array.isArray(data)) {
          throw new Error("The data is not an array!");
       }
@@ -168,8 +187,8 @@ class JsonEditor {
          throw new Error("You did not provide a path")
       }
       if (typeof path === "object") {
-         iterateObject(path, (iValue, n) => {
-            setValue(this.data, n, iValue, options);
+         iterateObject(path, (val, n) => {
+            setValue(this.data, n, val, options);
          })
       } else if (this.options.ignore_dots) {
          this.data[path] = value;
@@ -227,7 +246,7 @@ class JsonEditor {
       if (!path) {
          throw new Error("You did not provide a path")
       }
-      const data = this.get(path);
+      let data = this.get(path);
       if (!Array.isArray(data)) {
          throw new Error('The data is not an array!');
       }
@@ -247,7 +266,7 @@ class JsonEditor {
       if (!path) {
          throw new Error("You did not provide a path")
       }
-      const data = this.get(path);
+      let data = this.get(path);
       if (!Array.isArray(data)) {
          throw new Error('The data is not an array!');
       }
@@ -269,7 +288,7 @@ class JsonEditor {
       if (!path) {
          throw new Error("You did not provide a path")
       }
-      const data = this.get(path);
+      let data = this.get(path);
       if (!Array.isArray(data)) {
          throw new Error('The data is not an array!');
       }
@@ -277,31 +296,4 @@ class JsonEditor {
       this.set(path, data);
       return this;
    }
-}
-
-/**
- * Edit a json file
- *
- * @param {String} path The path to the JSON file
- * @param {{
- *    stringify_width?: Number,
- *    stringify_fn?: Function,
- *    stringify_eol?: Boolean,
- *    ignore_dots?: Boolean,
- *    autosave?: Boolean
- * }} options An object containing the following fields:
- *
- *  - `stringify_width` (Number): The JSON stringify indent width (default: `2`)
- *  - `stringify_fn` (Function): A function used by `JSON.stringify`
- *  - `stringify_eol` (Boolean): Whether to add the new line at the end of the file or not (default: `false`)
- *  - `ignore_dots` (Boolean): Whether to use the path including dots or have an object structure (default: `false`)
- *  - `autosave` (Boolean): Save the file when setting some data in it
- *
- * @return {jsonEditor} The `JsonEditor` instance
- */
-module.exports = function jsonEditor(path, options) {
-   if (!path) {
-      throw new Error("You did not provide a path")
-   }
-   return new JsonEditor(path, options);
 }
