@@ -18,7 +18,7 @@ npm i @acegoal07/json-editor
 ## About
 This project is not yet published and is not fully tested so use this code at your own risk
 
-If you w
+If you experience any errors or just have a feature idea open an issue and i'll give it a look
 
 ## Example
 ```js
