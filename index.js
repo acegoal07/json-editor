@@ -5,27 +5,7 @@ const findValue = require("find-value"),
    iterateObject = require("iterate-object"),
    os = require('os');
    
-module.exports = class JsonEditor {
-   /**
-    * Edit a json file
-    *
-    * @param {String} path The path to the JSON file
-    * @param {{
-    *    stringify_width?: Number,
-    *    stringify_fn?: Function,
-    *    stringify_eol?: Boolean,
-    *    ignore_dots?: Boolean,
-    *    autosave?: Boolean
-    * }} options An object containing the following fields:
-    *
-    *  - `stringify_width` (Number): The JSON stringify indent width (default: `2`)
-    *  - `stringify_fn` (Function): A function used by `JSON.stringify`
-    *  - `stringify_eol` (Boolean): Whether to add the new line at the end of the file or not (default: `false`)
-    *  - `ignore_dots` (Boolean): Whether to use the path including dots or have an object structure (default: `false`)
-    *  - `autosave` (Boolean): Save the file when setting some data in it
-    *
-    * @return {jsonEditor} The `JsonEditor` instance
-    */
+class editor {
    constructor (path, options) {
       this.options = options = options || {}
          options.stringify_width = options.stringify_width || 3
@@ -171,6 +151,7 @@ module.exports = class JsonEditor {
       if (!joiner) {
          throw new Error("No joiner was provided");
       }
+      if (data.length = 1) return data;
       return data.join(joiner);
    }
 
@@ -296,4 +277,60 @@ module.exports = class JsonEditor {
       this.set(path, data);
       return this;
    }
+}
+
+/**
+ * Creates a json file
+ * 
+ * @param {String} path The path to the file location 
+ * @param {Object} data The data you would like to populate the file with
+ */
+exports.create = function(path, data = `{}`) {
+   if (!path) {
+      throw new Error("No path was provided to createFile");
+   }
+   fs.writeFile(`${path}`, `${data}`, function (error) {
+      if (error) throw error;
+      return;
+   });
+}
+
+/**
+ * Deletes the specified json file
+ * 
+ * @param {String} path The path to the file location 
+ */
+exports.delete = function(path) {
+   if (!path) {
+      throw new Error("No path was provided to deleteFile");
+   }
+   fs.unlink(`${path}`, function (error) {
+      if (error) throw error;
+      return;
+   });
+}
+
+/**
+ * Edit a json file
+ *
+ * @param {String} path The path to the JSON file
+ * @param {{
+ *    stringify_width?: Number,
+ *    stringify_fn?: Function,
+ *    stringify_eol?: Boolean,
+ *    ignore_dots?: Boolean,
+ *    autosave?: Boolean
+ * }} options An object containing the following fields:
+ *
+ *  - `stringify_width` (Number): The JSON stringify indent width (default: `2`)
+ *  - `stringify_fn` (Function): A function used by `JSON.stringify`
+ *  - `stringify_eol` (Boolean): Whether to add the new line at the end of the file or not (default: `false`)
+ *  - `ignore_dots` (Boolean): Whether to use the path including dots or have an object structure (default: `false`)
+ *  - `autosave` (Boolean): Save the file when setting some data in it
+ *
+ * @returns {editor}
+ */
+
+exports.edit = function(path, options) {
+   return new editor(path, options)
 }

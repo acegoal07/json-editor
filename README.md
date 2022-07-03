@@ -16,15 +16,16 @@ npm i @acegoal07/json-editor
 ```
 
 ## About
-This project is not yet published and is not fully tested so use this code at your own risk
-
-If you experience any errors or just have a feature idea open an issue and i'll give it a look
+If you experience any issues or would like to recommend a feature open an issue and ill look into it
 
 ## Example
 ```js
-const jsonEditor = require("@acegoal07/json-editor");
+const json = require("@acegoal07/json-editor");
 
-let file = jsonEditor("display.json", {autosave: true});
+json.create("display.json");
+// Create a new json file
+
+let file = json.edit("display.json", {autosave: true});
 // file content = {}
 
 file.set("Hello", "world!");
@@ -59,10 +60,29 @@ file.emptyObject("items");
 
 file.empty()
 // {}
+
+json.delete("display.json");
+// Deletes the specified json file
 ```
 
-## Documentation
-### `JsonEditor(path, options)`
+
+## File documentation
+### `create(path, data)`
+Creates a json file
+<h4>Params</h4>
+
+- `path` - The path to the file location
+- `data` - The data you would like to populate the file with
+### `delete(path)`
+Deletes the specified json file
+<h4>Params</h4>
+
+- `path` - The path to the file location
+
+
+## editor documentation
+Edits json files
+### `edit(path, options)`
 <h4>Params</h4>
 
 - `path` - A string to show the location of the file
@@ -77,6 +97,8 @@ file.empty()
 <h4>Return</h4>
 
 - Returns an instance of the `JsonEditor`
+
+
 
 <!-- save !-->
 ### `.save(callback)`
