@@ -92,7 +92,7 @@ Moves the file from the old location to the new location
 - `oldPath` - The path to the file location
 - `newPath` - The path to the location you want to move the file
 
-## editor documentation
+## Editor documentation
 Edits json files
 ### `edit(path, options)`
 <h4>Params</h4>
