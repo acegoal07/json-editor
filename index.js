@@ -4,7 +4,10 @@ const findValue = require("find-value"),
    fs = require("fs"),
    iterateObject = require("iterate-object"),
    os = require('os');
-   
+
+   /**
+    * The json editor
+    */
 class editor {
    constructor (path, options) {
       this.options = options = options || {}
@@ -132,18 +135,27 @@ class editor {
    }
 
    /**
+    * Returns a string of the json data
+    *
+    * @returns {String} The data string
+    */
+   toString() {
+      return JSON.stringify(this.data);
+   }
+
+   /**
     * Returns a joined string from the array path
     *
     * @param {String} path The object path
     * @param {String} joiner The character to join the data with
     * @returns {String} The data string
     */
-   toString(path, joiner) {
+   arrayToString(path, joiner) {
       let data;
       if (!path) {
          data = this.data;
       } else {
-         data = this.get(path);         
+         data = this.get(path);
       }
       if (!Array.isArray(data)) {
          throw new Error("The data is not an array!");
@@ -280,37 +292,6 @@ class editor {
 }
 
 /**
- * Creates a json file
- * 
- * @param {String} path The path to the file location 
- * @param {Object} data The data you would like to populate the file with
- */
-exports.create = function(path, data = `{}`) {
-   if (!path) {
-      throw new Error("No path was provided to createFile");
-   }
-   fs.writeFile(`${path}`, `${data}`, function (error) {
-      if (error) throw error;
-      return;
-   });
-}
-
-/**
- * Deletes the specified json file
- * 
- * @param {String} path The path to the file location 
- */
-exports.delete = function(path) {
-   if (!path) {
-      throw new Error("No path was provided to deleteFile");
-   }
-   fs.unlink(`${path}`, function (error) {
-      if (error) throw error;
-      return;
-   });
-}
-
-/**
  * Edit a json file
  *
  * @param {String} path The path to the JSON file
@@ -333,4 +314,78 @@ exports.delete = function(path) {
 
 exports.edit = function(path, options) {
    return new editor(path, options)
+}
+
+/**
+ * Creates a json file
+ *
+ * @param {String} path The path to the file location
+ * @param {String} data The data you would like to populate the file with
+ */
+exports.create = function(path, data = `{}`) {
+   if (!path) {
+      throw new Error("No path was provided to createFile");
+   }
+   fs.writeFile(path, data, function (error) {
+      if (error) throw error;
+      return;
+   });
+}
+
+/**
+ * Deletes the specified json file
+ *
+ * @param {String} path The path to the file location
+ */
+exports.delete = function(path) {
+   if (!path) {
+      throw new Error("No path was provided to deleteFile");
+   }
+   fs.unlink(path, function (error) {
+      if (error) throw error;
+      return;
+   });
+}
+
+/**
+ * Duplicates the file you specify
+ *
+ * @param {String} path The path to the JSON file
+ * @param {String} copyPath The path to the location you want the new file saved
+ */
+exports.duplicate = function(path, copyPath) {
+   if (!path) {
+      throw new Error("No path was provided to duplicate");
+   }
+   if (!copyPath) {
+      fs.copyFile(path, path.replace(".json","-copy.json"), function (error) {
+         if (error) throw error;
+      });
+   } else {
+      fs.copyFile(path, copyPath, function (error) {
+         if (error) throw error;
+      });
+   }
+}
+
+/**
+ * Moves the file from the old location to the new location
+ * 
+ * @param {String} oldPath 
+ * @param {String} newPath 
+ */
+exports.move = function(oldPath, newPath) {
+   if (!oldPath) {
+      throw new Error("Missing the path to the old file location")
+   }
+   if (!newPath) {
+      throw new Error("Missing the path to the new file location")
+   }
+   fs.copyFile(oldPath, newPath, function (error) {
+      if (error) throw error;
+   });
+   fs.unlink(oldPath, function (error) {
+      if (error) throw error;
+      return;
+   });
 }

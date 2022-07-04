@@ -61,6 +61,7 @@ file.emptyObject("items");
 file.empty()
 // {}
 
+json.duplicate("display.json", "json/display.json");
 json.delete("display.json");
 // Deletes the specified json file
 ```
@@ -78,7 +79,18 @@ Deletes the specified json file
 <h4>Params</h4>
 
 - `path` - The path to the file location
+### `duplicate(path, copyPath)`
+Duplicates a json file to a location provided
+<h4>Params</h4>
 
+- `path` - The path to the file location
+- `copyPath` - The path to the location you want the new file saved
+### `move(oldPath, newPath)`
+Moves the file from the old location to the new location
+<h4>Params</h4>
+
+- `oldPath` - The path to the file location
+- `newPath` - The path to the location you want to move the file
 
 ## editor documentation
 Edits json files
@@ -203,7 +215,17 @@ Returns a object from the data path
 
 
 <!-- toObject !-->
-### `.toString(path, joiner)`
+### `.toString()`
+Returns a string of the json data
+<h4>Return</h4>
+
+- The data string
+<br>
+
+
+
+<!-- toObject !-->
+### `.arrayToString(path, joiner)`
 Returns a object from the data path
 <h4>Params</h4>
 
@@ -212,18 +234,6 @@ Returns a object from the data path
 <h4>Return</h4>
 
 - Returns a string of data
-<br>
-
-
-<!-- toString !-->
-### `.toString(joiner)`
-Returns a joined string from the array path
-<h4>Params</h4>
-
-- `joiner` - The character that will be used to join the data
-<h4>Return</h4>
-
-- Returns a joined string from the array path
 <br>
 
 
