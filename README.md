@@ -219,7 +219,7 @@ Returns a object from the data path
 Returns a string of the json data
 <h4>Return</h4>
 
-- The data string
+- Returns the data from the json as a string
 <br>
 
 
