@@ -109,6 +109,7 @@ Edits json files
 <h4>Return</h4>
 
 - Returns an instance of the `JsonEditor`
+<br>
 
 
 
