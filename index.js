@@ -5,9 +5,9 @@ const findValue = require("find-value"),
    iterateObject = require("iterate-object"),
    os = require('os');
 
-   /**
-    * The json editor
-    */
+/**
+ * The json editor
+ */
 class editor {
    constructor (path, options) {
       this.options = options = options || {}
@@ -20,11 +20,11 @@ class editor {
    }
 
    /**
-     * Saves the file and any changes
-     *
-     * @param {Function} callback An optional callback function which will turn the function into an asynchronous one
-     * @returns {JsonEditor} The `JsonEditor` instance
-     */
+    * Saves the file and any changes
+    *
+    * @param {Function} callback An optional callback function which will turn the function into an asynchronous one
+    * @returns {JsonEditor} The `JsonEditor` instance
+    */
    save(callback) {
       const data = JSON.stringify(
          this.data,
@@ -137,10 +137,15 @@ class editor {
    /**
     * Returns a string of the json data
     *
+    * @param {Boolean} keepLayout Weather or not the data should keep the object layout from the file
     * @returns {String} The data string
     */
-   toString() {
-      return JSON.stringify(this.data);
+   toString(keepLayout = false) {
+      if (keepLayout) {
+         return JSON.stringify(JSON.parse(data), null, 2);
+      } else {
+         return JSON.stringify(this.data);         
+      }
    }
 
    /**
@@ -371,8 +376,8 @@ exports.duplicate = function(path, copyPath) {
 /**
  * Moves the file from the old location to the new location
  * 
- * @param {String} oldPath 
- * @param {String} newPath 
+ * @param {String} oldPath The path to the file location
+ * @param {String} newPath The path to the location you want to move the file
  */
 exports.move = function(oldPath, newPath) {
    if (!oldPath) {

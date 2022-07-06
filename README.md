@@ -216,8 +216,11 @@ Returns a object from the data path
 
 
 <!-- toObject !-->
-### `.toString()`
+### `.toString(keepLayout)`
 Returns a string of the json data
+<h4>Params</h4>
+
+- `keepLayout` - An option to keep the layout of the json file (default: false)
 <h4>Return</h4>
 
 - Returns the data from the json as a string
