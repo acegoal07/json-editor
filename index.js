@@ -358,7 +358,7 @@ exports.delete = function(path) {
  * @param {String} path The path to the JSON file
  * @param {String} copyPath The path to the location you want the new file saved
  */
-exports.duplicate = function(path, copyPath) {
+exports.duplicate = function(path, copyPath = null) {
    if (!path) {
       throw new Error("No path was provided to duplicate");
    }
@@ -369,6 +369,7 @@ exports.duplicate = function(path, copyPath) {
    } else {
       fs.copyFile(path, copyPath, function (error) {
          if (error) throw error;
+         return
       });
    }
 }
@@ -390,6 +391,25 @@ exports.move = function(oldPath, newPath) {
       if (error) throw error;
    });
    fs.unlink(oldPath, function (error) {
+      if (error) throw error;
+      return;
+   });
+}
+
+/**
+ * Renames the specified file to the new provided name
+ * 
+ * @param {String} path 
+ * @param {String} newName 
+ */
+exports.rename = function(path, newName) {
+   if (!path) {
+      throw new Error("No path was provided to rename");
+   }
+   if (!newName) {
+      throw new Error("A new name was not provided to rename")
+   }
+   fs.rename(path, path.replace(path.split(/[\\/]/).pop(), newName), function (error) {
       if (error) throw error;
       return;
    });
