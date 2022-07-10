@@ -22,10 +22,10 @@ If you experience any issues or would like to recommend a feature open an issue 
 ```js
 const json = require("@acegoal07/json-editor");
 
-json.create("display.json");
+json.createFile("display.json");
 // Create a new json file
 
-let file = json.edit("display.json", {autosave: true});
+let file = json.editFile("display.json", {autosave: true});
 // file content = {}
 
 file.set("Hello", "world!");
@@ -61,40 +61,48 @@ file.emptyObject("items");
 file.empty()
 // {}
 
-json.duplicate("display.json", "json/display.json");
-json.delete("display.json");
+json.copyFile("display.json", "json/display.json");
+json.deleteFile("display.json");
 // Deletes the specified json file
+
+json.renameFile("json/display.json", "show.json");
+// Changes the name of the specified file
 ```
 
 
 ## File documentation
-### `create(path, data)`
+### `createFile(path, data)`
 Creates a json file
 <h4>Params</h4>
 
 - `path` - The path to the file location
 - `data` - The data you would like to populate the file with
-### `delete(path)`
+### `deleteFile(path)`
 Deletes the specified json file
 <h4>Params</h4>
 
 - `path` - The path to the file location
-### `duplicate(path, copyPath)`
+### `copyFile(path, copyPath)`
 Duplicates a json file to a location provided
 <h4>Params</h4>
 
 - `path` - The path to the file location
 - `copyPath` - The path to the location you want the new file saved
-### `move(oldPath, newPath)`
+### `moveFile(oldPath, newPath)`
 Moves the file from the old location to the new location
 <h4>Params</h4>
 
 - `oldPath` - The path to the file location
 - `newPath` - The path to the location you want to move the file
+### `renameFile(path, newName)`
+Renames the file that is specified
+<h4>Params</h4>
 
+- `path` - The path to the file location
+- `newName` - The new name that will be set for the file
 ## Editor documentation
 Edits json files
-### `edit(path, options)`
+### `editFile(path, options)`
 <h4>Params</h4>
 
 - `path` - A string to show the location of the file

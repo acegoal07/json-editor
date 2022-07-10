@@ -317,7 +317,10 @@ class editor {
  * @returns {editor}
  */
 
-exports.edit = function(path, options) {
+exports.editFile = function(path, options) {
+   if (!path) {
+      throw new Error("ERROR with editFile: path is null")
+   }
    return new editor(path, options)
 }
 
@@ -327,9 +330,9 @@ exports.edit = function(path, options) {
  * @param {String} path The path to the file location
  * @param {String} data The data you would like to populate the file with
  */
-exports.create = function(path, data = `{}`) {
+exports.createFile = function(path, data = `{}`) {
    if (!path) {
-      throw new Error("No path was provided to createFile");
+      throw new Error("ERROR with createFile: path is null");
    }
    fs.writeFile(path, data, function (error) {
       if (error) throw error;
@@ -342,9 +345,9 @@ exports.create = function(path, data = `{}`) {
  *
  * @param {String} path The path to the file location
  */
-exports.delete = function(path) {
+exports.deleteFile = function(path) {
    if (!path) {
-      throw new Error("No path was provided to deleteFile");
+      throw new Error("ERROR with deleteFile: path is null");
    }
    fs.unlink(path, function (error) {
       if (error) throw error;
@@ -358,9 +361,9 @@ exports.delete = function(path) {
  * @param {String} path The path to the JSON file
  * @param {String} copyPath The path to the location you want the new file saved
  */
-exports.duplicate = function(path, copyPath = null) {
+exports.copyFile = function(path, copyPath = null) {
    if (!path) {
-      throw new Error("No path was provided to duplicate");
+      throw new Error("ERROR with copyFile: path is null");
    }
    if (!copyPath) {
       fs.copyFile(path, path.replace(".json","-copy.json"), function (error) {
@@ -380,12 +383,12 @@ exports.duplicate = function(path, copyPath = null) {
  * @param {String} oldPath The path to the file location
  * @param {String} newPath The path to the location you want to move the file
  */
-exports.move = function(oldPath, newPath) {
+exports.moveFile = function(oldPath, newPath) {
    if (!oldPath) {
-      throw new Error("Missing the path to the old file location")
+      throw new Error("ERROR with moveFile: oldPath is null");
    }
    if (!newPath) {
-      throw new Error("Missing the path to the new file location")
+      throw new Error("ERROR with moveFile: newPath is null");
    }
    fs.copyFile(oldPath, newPath, function (error) {
       if (error) throw error;
@@ -399,15 +402,15 @@ exports.move = function(oldPath, newPath) {
 /**
  * Renames the specified file to the new provided name
  * 
- * @param {String} path 
- * @param {String} newName 
+ * @param {String} path The path to the file location
+ * @param {String} newName The new name that will be set for the file
  */
-exports.rename = function(path, newName) {
+exports.renameFile = function(path, newName) {
    if (!path) {
-      throw new Error("No path was provided to rename");
+      throw new Error("ERROR with renameFile: path is null");
    }
    if (!newName) {
-      throw new Error("A new name was not provided to rename")
+      throw new Error("ERROR with renameFile: newName is null")
    }
    fs.rename(path, path.replace(path.split(/[\\/]/).pop(), newName), function (error) {
       if (error) throw error;
