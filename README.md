@@ -16,6 +16,8 @@ npm i @acegoal07/json-editor
 ```
 
 ## About
+This package is still a working progress so expect changes that could change how it is used
+
 If you experience any issues or would like to recommend a feature open an issue and ill look into it
 
 ## Example
