@@ -213,12 +213,7 @@ class editor {
    }
 
    /**
-    * Appends a value/object to a specific path
-    * If the path is empty it wil create a list
-    *
-    * @param {String} path The object path
-    * @param {Anything} value The value
-    * @returns {JsonEditor} The `JsonEditor` instance
+    * @deprecated This feature has been deprecated in favour of adding pushTop and pushBottom
     */
    append(path, value) {
       if (!path) {
@@ -233,6 +228,48 @@ class editor {
       this.set(path,data);
       return this;
    }
+
+   /**
+    * Pushes the data to the top of the specified array
+    * 
+    * @param {String} path The object path
+    * @param {Anything} value The value
+    * @returns {JsonEditor} The `JsonEditor` instance
+    */
+   push(path, value) {
+      if (!path) {
+         throw new Error("You did not provide a path")
+      }
+      let data = this.get(path);
+      data = (data === undefined) ? [] : data;
+         if (!Array.isArray(data)) {
+            throw new Error("The data is not an array!");
+         }
+      data.push(value);
+      this.set(path,data);
+      return this;
+   }
+
+   /**
+    * Pushes the data to the bottom of the specified array
+    * 
+    * @param {String} path The object path
+    * @param {Anything} value The value
+    * @returns {JsonEditor} The `JsonEditor` instance
+    */
+      unshift(path, value) {
+         if (!path) {
+            throw new Error("You did not provide a path")
+         }
+         let data = this.get(path);
+         data = (data === undefined) ? [] : data;
+            if (!Array.isArray(data)) {
+               throw new Error("The data is not an array!");
+            }
+         data.unshift(value);
+         this.set(path,data);
+         return this;
+      }
 
    /**
     * Remove the last item from an array

@@ -42,12 +42,14 @@ file.set("data", []);
 console.log(file.get("Hello"))
 // log => world!
 
-file.append("data", "test");
-file.append("data", "test2");
+file.push("data", "test");
+file.push("data", "test2")
+file.unshift("data", "test3");
 file.set("items", {"world": "world!"});
 file.unset("Hello");
 // {
 //   "data": [
+//       "test3",
 //       "test",
 //       "test2"
 //   ],
@@ -280,8 +282,22 @@ Remove a path from a JSON object
 
 
 <!-- append !-->
-### `.append(path, value)`
-Appends a value/object to a specific path, If the path is empty it wil create a list
+### `.unshift(path, value)`
+Pushes the data to the top of the specified array
+<h4>Params</h4>
+
+- `path` - The object path
+- `value` - The data you want to put into the json file
+<h4>Return</h4>
+
+- Returns an instance of the `JsonEditor`
+<br>
+
+
+
+<!-- append !-->
+### `.push(path, value)`
+Pushes the data to the bottom of the specified array
 <h4>Params</h4>
 
 - `path` - The object path
