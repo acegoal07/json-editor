@@ -83,11 +83,11 @@ class editor {
     */
    emptyArray(path) {
       if (!path) {
-         throw new Error("You did not provide a path")
+         throw new Error("emptyArray ERROR: path is null")
       }
       const data = this.get(path);
       if (!Array.isArray(data)) {
-         throw new Error("The data is not an array!");
+         throw new Error("emptyArray ERROR: The data is not an array");
       }
       return this.set(path, []);
    }
@@ -97,11 +97,11 @@ class editor {
     */
    emptyObject(path) {
       if (!path) {
-         throw new Error("You did not provide a path")
+         throw new Error("emptyObject ERROR: path is null")
       }
       const data = this.get(path)
       if (typeof data !== "object") {
-         throw new Error("The data is not an object")
+         throw new Error("emptyObject ERROR: The data is not an object")
       }
       return this.set(path, {});
    }
@@ -163,10 +163,10 @@ class editor {
          data = this.get(path);
       }
       if (!Array.isArray(data)) {
-         throw new Error("The data is not an array!");
+         throw new Error("arrayToString ERROR: The data is not an array");
       }
       if (!joiner) {
-         throw new Error("No joiner was provided");
+         throw new Error("arrayToString ERROR: joiner is null");
       }
       if (data.length = 1) return data;
       return data.join(joiner);
@@ -182,7 +182,7 @@ class editor {
     */
    set(path, value, options) {
       if (!path) {
-         throw new Error("You did not provide a path")
+         throw new Error("set ERROR: path is null")
       }
       if (typeof path === "object") {
          iterateObject(path, (val, n) => {
@@ -207,26 +207,9 @@ class editor {
     */
    unset(path) {
       if (!path) {
-         throw new Error("You did not provide a path")
+         throw new Error("unset ERROR: path is null")
       }
       return this.set(path, undefined)
-   }
-
-   /**
-    * @deprecated This feature has been deprecated in favour of adding pushTop and pushBottom
-    */
-   append(path, value) {
-      if (!path) {
-         throw new Error("You did not provide a path")
-      }
-      let data = this.get(path);
-      data = (data === undefined) ? [] : data;
-         if (!Array.isArray(data)) {
-            throw new Error("The data is not an array!");
-         }
-      data.push(value);
-      this.set(path,data);
-      return this;
    }
 
    /**
@@ -238,12 +221,12 @@ class editor {
     */
    push(path, value) {
       if (!path) {
-         throw new Error("You did not provide a path")
+         throw new Error("push ERROR: path is null")
       }
       let data = this.get(path);
       data = (data === undefined) ? [] : data;
          if (!Array.isArray(data)) {
-            throw new Error("The data is not an array!");
+            throw new Error("push ERROR: The data is not an array");
          }
       data.push(value);
       this.set(path,data);
@@ -257,19 +240,19 @@ class editor {
     * @param {Anything} value The value
     * @returns {JsonEditor} The `JsonEditor` instance
     */
-      unshift(path, value) {
-         if (!path) {
-            throw new Error("You did not provide a path")
-         }
-         let data = this.get(path);
-         data = (data === undefined) ? [] : data;
-            if (!Array.isArray(data)) {
-               throw new Error("The data is not an array!");
-            }
-         data.unshift(value);
-         this.set(path,data);
-         return this;
+   unshift(path, value) {
+      if (!path) {
+         throw new Error("unshift ERROR: path is null")
       }
+      let data = this.get(path);
+      data = (data === undefined) ? [] : data;
+         if (!Array.isArray(data)) {
+            throw new Error("unshift ERROR: The data is not an array");
+         }
+      data.unshift(value);
+      this.set(path,data);
+      return this;
+   }
 
    /**
     * Remove the last item from an array
@@ -279,11 +262,11 @@ class editor {
     */
    popLast(path) {
       if (!path) {
-         throw new Error("You did not provide a path")
+         throw new Error("popLast ERROR: path is null")
       }
       let data = this.get(path);
       if (!Array.isArray(data)) {
-         throw new Error('The data is not an array!');
+         throw new Error('popLast ERROR: The data is not an array');
       }
       data.pop();
       this.set(path, data);
@@ -299,14 +282,14 @@ class editor {
     */
    popTo(path, position) {
       if (!path) {
-         throw new Error("You did not provide a path")
+         throw new Error("popTo ERROR: path is null")
       }
       let data = this.get(path);
       if (!Array.isArray(data)) {
-         throw new Error('The data is not an array!');
+         throw new Error('popTo ERROR: The data is not an array');
       }
       if (!data[position]) {
-         throw new Error('The item does not exist on this array');
+         throw new Error('popTo ERROR: The item does not exist on this array');
       }
       data.splice(position, position);
       this.set(path, data);
@@ -321,15 +304,36 @@ class editor {
     */
    popFirst(path) {
       if (!path) {
-         throw new Error("You did not provide a path")
+         throw new Error("popFirst ERROR: path is null")
       }
       let data = this.get(path);
       if (!Array.isArray(data)) {
-         throw new Error('The data is not an array!');
+         throw new Error('popFirst ERROR: The data is not an array');
       }
       data.shift();
       this.set(path, data);
       return this;
+   }
+
+   /**
+    * Gets the keys of data from the
+    * 
+    * @param {String} path An optional setting to get keys from a path
+    */
+   getKeys(path = null) {
+      if (!path) {
+         const data = this.get(path);
+         if (typeof data != "object") {
+            throw new Error("getKeys ERROR: The data is not an object");
+         }
+         return Object.keys(data);
+      } else {
+         const data = this.get(path);
+         if (typeof data != "object") {
+            throw new Error("getKeys ERROR: The data is not an object");
+         }
+         return Object.keys(data);
+      }
    }
 }
 
@@ -356,7 +360,7 @@ class editor {
 
 exports.editFile = function(path, options) {
    if (!path) {
-      throw new Error("ERROR with editFile: path is null")
+      throw new Error("ERROR with editFile: Path is null")
    }
    return new editor(path, options)
 }
@@ -364,12 +368,12 @@ exports.editFile = function(path, options) {
 /**
  * Creates a json file
  *
- * @param {String} path The path to the file location
+ * @param {String} path The path to the JSON file
  * @param {String} data The data you would like to populate the file with
  */
 exports.createFile = function(path, data = `{}`) {
    if (!path) {
-      throw new Error("ERROR with createFile: path is null");
+      throw new Error("ERROR with createFile: Path is null");
    }
    fs.writeFile(path, data, function (error) {
       if (error) throw error;
@@ -380,7 +384,7 @@ exports.createFile = function(path, data = `{}`) {
 /**
  * Deletes the specified json file
  *
- * @param {String} path The path to the file location
+ * @param {String} path The path to the JSON file
  */
 exports.deleteFile = function(path) {
    if (!path) {
@@ -417,7 +421,7 @@ exports.copyFile = function(path, copyPath = null) {
 /**
  * Moves the file from the old location to the new location
  * 
- * @param {String} oldPath The path to the file location
+ * @param {String} oldPath The path to the JSON file
  * @param {String} newPath The path to the location you want to move the file
  */
 exports.moveFile = function(oldPath, newPath) {
@@ -439,7 +443,7 @@ exports.moveFile = function(oldPath, newPath) {
 /**
  * Renames the specified file to the new provided name
  * 
- * @param {String} path The path to the file location
+ * @param {String} path The path to the JSON file
  * @param {String} newName The new name that will be set for the file
  */
 exports.renameFile = function(path, newName) {
