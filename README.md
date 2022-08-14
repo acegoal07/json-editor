@@ -345,3 +345,17 @@ Remove the last item from an array
 <h4>Return</h4>
 
 - Returns an instance of the `JsonEditor`
+<br>
+
+
+
+<!-- popTo !-->
+### `.getKeys(path)`
+Gets the keys of the object 
+<h4>Params</h4>
+
+- `path` - The object path
+<h4>Return</h4>
+
+- Returns an array with all the keys in
+<br>

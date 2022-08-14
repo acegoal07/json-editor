@@ -93,7 +93,9 @@ class editor {
    }
 
    /**
-    *
+    * Empty an objects content
+    * 
+    * @param {String} path The object path
     */
    emptyObject(path) {
       if (!path) {
@@ -105,6 +107,7 @@ class editor {
       }
       return this.set(path, {});
    }
+
    /**
     * Read the JSON file
     *
