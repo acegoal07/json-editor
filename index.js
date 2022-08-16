@@ -158,7 +158,7 @@ class editor {
     * @param {String} joiner The character to join the data with
     * @returns {String} The data string
     */
-   arrayToString(path, joiner) {
+   arrayToString({path = null, joiner = ","}) {
       let data;
       if (!path) {
          data = this.data;
@@ -322,6 +322,7 @@ class editor {
     * Gets the keys of data from the
     * 
     * @param {String} path An optional setting to get keys from a path
+    * @returns {Array} The keys
     */
    getKeys(path = null) {
       if (!path) {
@@ -337,6 +338,18 @@ class editor {
          }
          return Object.keys(data);
       }
+   }
+
+   /**
+    * Deletes the file that's being edited
+    */
+   delete() {
+      fs.unlink(this.path, function (error) {
+         if (error) {
+            throw new Error(`delete ERROR: ${error}`);
+         };
+         return;
+      });
    }
 }
 

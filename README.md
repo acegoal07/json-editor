@@ -178,7 +178,7 @@ Empty the JSON file content
 
 
 
-<!-- empty !-->
+<!-- emptyArray !-->
 ### `.emptyArray(path)`
 Removes all the items from an array
 <h4>Params</h4>
@@ -191,7 +191,7 @@ Removes all the items from an array
 
 
 
-<!-- empty !-->
+<!-- emptyObject !-->
 ### `.emptyObject(path)`
 Removes all the items from a object
 <h4>Params</h4>
@@ -227,7 +227,7 @@ Returns a object from the data path
 
 
 
-<!-- toObject !-->
+<!-- toString !-->
 ### `.toString(keepLayout)`
 Returns a string of the json data
 <h4>Params</h4>
@@ -240,8 +240,8 @@ Returns a string of the json data
 
 
 
-<!-- toObject !-->
-### `.arrayToString(path, joiner)`
+<!-- arrayToString !-->
+### `.arrayToString({path, joiner})`
 Returns a object from the data path
 <h4>Params</h4>
 
@@ -281,7 +281,7 @@ Remove a path from a JSON object
 
 
 
-<!-- append !-->
+<!-- unshift !-->
 ### `.unshift(path, value)`
 Pushes the data to the top of the specified array
 <h4>Params</h4>
@@ -295,7 +295,7 @@ Pushes the data to the top of the specified array
 
 
 
-<!-- append !-->
+<!-- push !-->
 ### `.push(path, value)`
 Pushes the data to the bottom of the specified array
 <h4>Params</h4>
@@ -349,7 +349,7 @@ Remove the last item from an array
 
 
 
-<!-- popTo !-->
+<!-- getKeys !-->
 ### `.getKeys(path)`
 Gets the keys of the object 
 <h4>Params</h4>
@@ -358,4 +358,11 @@ Gets the keys of the object
 <h4>Return</h4>
 
 - Returns an array with all the keys in
+<br>
+
+
+
+<!-- delete !-->
+### `.delete()`
+Deletes the current file your editing
 <br>
