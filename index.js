@@ -44,7 +44,7 @@ class editor {
     */
    get(path) {
       if (path) {
-         if(this.options.ignore_dots) {
+         if (this.options.ignore_dots) {
             return this.data[path];
          }
          return findValue(this.data, path)
@@ -186,6 +186,9 @@ class editor {
    set(path, value, options) {
       if (!path) {
          throw new Error("set ERROR: path is null")
+      }
+      if (!value) {
+         throw new Error("set ERROR: value is null")
       }
       if (typeof path === "object") {
          iterateObject(path, (val, n) => {
