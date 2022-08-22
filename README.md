@@ -20,6 +20,9 @@ This package is still a working progress so expect changes that could change how
 
 If you experience any issues or would like to recommend a feature open an issue and ill look into it
 
+
+If your interested in supporting my projects you can find donation options <a href="https://acegoal07.dev/donate">here</a>
+
 ## Example
 ```js
 const json = require("@acegoal07/json-editor");
