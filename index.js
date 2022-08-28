@@ -367,13 +367,11 @@ class editor {
  *    ignore_dots?: Boolean,
  *    autosave?: Boolean
  * }} options An object containing the following fields:
- *
  *  - `stringify_width` (Number): The JSON stringify indent width (default: `2`)
  *  - `stringify_fn` (Function): A function used by `JSON.stringify`
  *  - `stringify_eol` (Boolean): Whether to add the new line at the end of the file or not (default: `false`)
  *  - `ignore_dots` (Boolean): Whether to use the path including dots or have an object structure (default: `false`)
  *  - `autosave` (Boolean): Save the file when setting some data in it
- *
  * @returns {editor}
  */
 
@@ -397,6 +395,41 @@ exports.createFile = function(path, data = `{}`) {
    fs.writeFile(path, data, function (error) {
       if (error) throw error;
       return;
+   });
+}
+
+/**
+ * Creates a new file and passes it with the editor attached already
+ * 
+ * @param {String} path The path to the JSON file
+ * @param {{
+ *    data?: String 
+ *    editorOptions?: {
+ *       stringify_width?: Number,
+ *       stringify_fn?: Function,
+ *       stringify_eol?: Boolean,
+ *       ignore_dots?: Boolean,
+ *       autosave?: Boolean
+ *    }
+ * }} options The options for the data setting and editor options:
+ * 
+ *    `data` (String): The data to be set to the file on create
+ *    
+ *    `editorOptions` (Object) - This object contains all the options for the file editor:
+ *       - `stringify_width` (Number): The JSON stringify indent width (default: `2`)
+ *       - `stringify_fn` (Function): A function used by `JSON.stringify`
+ *       - `stringify_eol` (Boolean): Whether to add the new line at the end of the file or not (default: `false`)
+ *       - `ignore_dots` (Boolean): Whether to use the path including dots or have an object structure (default: `false`)
+ *       - `autosave` (Boolean): Save the file when setting some data in it
+ * @return {editor}
+ */
+exports.createFileEditor = function(path, options = {data: `{}`, editorOptions}) {
+   if (!path) {
+      throw new Error("ERROR with createFileEditor: Path is null");
+   }
+   fs.writeFile(path, options.data, function (error) {
+      if (error) throw error;
+      return new editor(path, options.editorOptions);
    });
 }
 
@@ -476,4 +509,47 @@ exports.renameFile = function(path, newName) {
       if (error) throw error;
       return;
    });
+}
+
+/**
+ * Returns the data from the specified file
+ * 
+ * @param {String} path 
+ * @return {Object}
+ */
+exports.readFile = function(path) {
+   if (!path) {
+      throw new Error("ERROR with readFile: path is null");
+   }
+   fs.readFile(path, (err, data) => {
+      if (err) throw err;
+      return JSON.parse(data);
+   });
+}
+
+/**
+ * Retunes a map filed with all the data from the files
+ * 
+ * @param {String} path The path to the JSON file
+ * @returns {Map} A map of the data from the files
+ */
+exports.readAllFiles = function(path) {
+   if (!path) {
+      throw new Error("ERROR with readAllFiles: path is null");
+   }
+   let dataMap = new Map();
+   const dir = fs.readdirSync(path);
+   for (const file of dir) {
+      if (!file.toLowerCase().endsWith(".json")) {
+      } else {
+         dataMap.set(
+            file.toLowerCase().replace(".json", ""), 
+            readFile(`${path}/${file}`, (err, data) => {
+            if (err) throw err;
+            console.log(data);
+            })
+         )         
+      }
+   }
+   return dataMap;
 }
