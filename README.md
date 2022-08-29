@@ -113,7 +113,7 @@ Edits json files
 <h4>Params</h4>
 
 - `path` - A string to show the location of the file
-- `options` - A object of custom options for the editor:
+- `options` - A object of custom options for the editor
 <h4>Options</h4>
 
 - `stringify_width` (Number): The JSON stringify indent width (default: `2`)

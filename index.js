@@ -357,7 +357,7 @@ class editor {
 }
 
 /**
- * Edit a json file
+ * Creates an editor instance for the specified file
  *
  * @param {String} path The path to the JSON file
  * @param {{
