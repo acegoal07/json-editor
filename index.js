@@ -411,7 +411,7 @@ exports.createFile = function(path, data = `{}`) {
  *       ignore_dots?: Boolean,
  *       autosave?: Boolean
  *    }
- * }} options The options for the data setting and editor options:
+ * }} The options for the data setting and editor options:
  * 
  *    `data` (String): The data to be set to the file on create
  *    
@@ -423,7 +423,7 @@ exports.createFile = function(path, data = `{}`) {
  *       - `autosave` (Boolean): Save the file when setting some data in it
  * @return {editor}
  */
-exports.createFileEditor = function(path, options = {data: `{}`, editorOptions}) {
+exports.createFileEditor = function(path, {data = `{}`, editorOptions}) {
    if (!path) {
       throw new Error("ERROR with createFileEditor: Path is null");
    }
@@ -528,9 +528,9 @@ exports.readFile = function(path) {
 }
 
 /**
- * Retunes a map filed with all the data from the files
+ * Retunes a map filed with all the data from the files in the folder
  * 
- * @param {String} path The path to the JSON file
+ * @param {String} path The path to the folder containing the files
  * @returns {Map} A map of the data from the files
  */
 exports.readAllFiles = function(path) {
