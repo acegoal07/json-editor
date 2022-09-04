@@ -94,7 +94,7 @@ class editor {
 
    /**
     * Empty an objects content
-    * 
+    *
     * @param {String} path The object path
     */
    emptyObject(path) {
@@ -147,7 +147,7 @@ class editor {
       if (keepLayout) {
          return JSON.stringify(JSON.parse(data), null, 2);
       } else {
-         return JSON.stringify(this.data);         
+         return JSON.stringify(this.data);
       }
    }
 
@@ -220,7 +220,7 @@ class editor {
 
    /**
     * Pushes the data to the top of the specified array
-    * 
+    *
     * @param {String} path The object path
     * @param {Anything} value The value
     * @returns {JsonEditor} The `JsonEditor` instance
@@ -241,7 +241,7 @@ class editor {
 
    /**
     * Pushes the data to the bottom of the specified array
-    * 
+    *
     * @param {String} path The object path
     * @param {Anything} value The value
     * @returns {JsonEditor} The `JsonEditor` instance
@@ -323,7 +323,7 @@ class editor {
 
    /**
     * Gets the keys of data from the
-    * 
+    *
     * @param {String} path An optional setting to get keys from a path
     * @returns {Array} The keys
     */
@@ -399,41 +399,6 @@ exports.createFile = function(path, data = `{}`) {
 }
 
 /**
- * Creates a new file and passes it with the editor attached already
- * 
- * @param {String} path The path to the JSON file
- * @param {{
- *    data?: String 
- *    editorOptions?: {
- *       stringify_width?: Number,
- *       stringify_fn?: Function,
- *       stringify_eol?: Boolean,
- *       ignore_dots?: Boolean,
- *       autosave?: Boolean
- *    }
- * }} The options for the data setting and editor options:
- * 
- *    `data` (String): The data to be set to the file on create
- *    
- *    `editorOptions` (Object) - This object contains all the options for the file editor:
- *       - `stringify_width` (Number): The JSON stringify indent width (default: `2`)
- *       - `stringify_fn` (Function): A function used by `JSON.stringify`
- *       - `stringify_eol` (Boolean): Whether to add the new line at the end of the file or not (default: `false`)
- *       - `ignore_dots` (Boolean): Whether to use the path including dots or have an object structure (default: `false`)
- *       - `autosave` (Boolean): Save the file when setting some data in it
- * @return {editor}
- */
-exports.createFileEditor = function(path, {data = `{}`, editorOptions}) {
-   if (!path) {
-      throw new Error("ERROR with createFileEditor: Path is null");
-   }
-   fs.writeFile(path, options.data, function (error) {
-      if (error) throw error;
-      return new editor(path, options.editorOptions);
-   });
-}
-
-/**
  * Deletes the specified json file
  *
  * @param {String} path The path to the JSON file
@@ -472,7 +437,7 @@ exports.copyFile = function(path, copyPath = null) {
 
 /**
  * Moves the file from the old location to the new location
- * 
+ *
  * @param {String} oldPath The path to the JSON file
  * @param {String} newPath The path to the location you want to move the file
  */
@@ -494,7 +459,7 @@ exports.moveFile = function(oldPath, newPath) {
 
 /**
  * Renames the specified file to the new provided name
- * 
+ *
  * @param {String} path The path to the JSON file
  * @param {String} newName The new name that will be set for the file
  */
@@ -513,23 +478,20 @@ exports.renameFile = function(path, newName) {
 
 /**
  * Returns the data from the specified file
- * 
- * @param {String} path 
- * @return {Object}
+ *
+ * @param {String} path The path to the JSON file
+ * @return {Object} The data from the file
  */
 exports.readFile = function(path) {
    if (!path) {
       throw new Error("ERROR with readFile: path is null");
    }
-   fs.readFile(path, (err, data) => {
-      if (err) throw err;
-      return JSON.parse(data);
-   });
+   return rJson(path);
 }
 
 /**
  * Retunes a map filed with all the data from the files in the folder
- * 
+ *
  * @param {String} path The path to the folder containing the files
  * @returns {Map} A map of the data from the files
  */
@@ -537,18 +499,11 @@ exports.readAllFiles = function(path) {
    if (!path) {
       throw new Error("ERROR with readAllFiles: path is null");
    }
-   let dataMap = new Map();
-   const dir = fs.readdirSync(path);
-   for (const file of dir) {
+   const dataMap = new Map();
+   for (const file of fs.readdirSync(path)) {
       if (!file.toLowerCase().endsWith(".json")) {
       } else {
-         dataMap.set(
-            file.toLowerCase().replace(".json", ""), 
-            readFile(`${path}/${file}`, (err, data) => {
-            if (err) throw err;
-            console.log(data);
-            })
-         )         
+         dataMap.set(file, rJson(`${path}/${file}`));
       }
    }
    return dataMap;
