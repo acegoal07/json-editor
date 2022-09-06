@@ -349,6 +349,7 @@ class editor {
     */
    delete() {
       exports.deleteFile(this.path);
+      return;
    }
 }
 
@@ -383,6 +384,7 @@ exports.editFile = function(path, options) {
  *
  * @param {String} path The path to the JSON file
  * @param {String} data The data you would like to populate the file with
+ * @returns {editor}
  */
 exports.createFile = function(path, data = `{}`) {
    if (!path) {
@@ -447,10 +449,8 @@ exports.moveFile = function(oldPath, newPath) {
    fs.copyFile(oldPath, newPath, function (error) {
       if (error) throw error;
    });
-   fs.unlink(oldPath, function (error) {
-      if (error) throw error;
-      return;
-   });
+   exports.deleteFile(oldPath);
+   return;
 }
 
 /**
@@ -476,7 +476,7 @@ exports.renameFile = function(path, newName) {
  * Returns the data from the specified file
  *
  * @param {String} path The path to the JSON file
- * @return {Object} The data from the file
+ * @returns {Object} The data from the file
  */
 exports.readFile = function(path) {
    if (!path) {
@@ -486,7 +486,7 @@ exports.readFile = function(path) {
 }
 
 /**
- * Returnes the data from all the json files in a folder either as a map or array
+ * Returns the data from all the json files in a folder either as a map or array
  *
  * @param {String} path The path to the folder containing the files
  * @param {"Map" | "Array"} format how the data will be presented (default: `Map`)
@@ -501,12 +501,12 @@ exports.readAllFiles = function(path, format = "Map") {
       for (const file of fs.readdirSync(path)) {
          if (!file.toLowerCase().endsWith(".json")) {
          } else {
-            const data = 
+            array.push(
                {
                   file: file.toLowerCase().replace(".json", ""),
                   data: rJson(`${path}/${file}`)
                }
-            array.push(data);
+            );
          }
       }
       return array;
