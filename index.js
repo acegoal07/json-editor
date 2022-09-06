@@ -215,7 +215,8 @@ class editor {
       if (!path) {
          throw new Error("unset ERROR: path is null")
       }
-      return this.set(path, undefined)
+      this.set(path, undefined);
+      return this;
    }
 
    /**
@@ -347,12 +348,7 @@ class editor {
     * Deletes the file that's being edited
     */
    delete() {
-      fs.unlink(this.path, function (error) {
-         if (error) {
-            throw new Error(`delete ERROR: ${error}`);
-         };
-         return;
-      });
+      exports.deleteFile(this.path);
    }
 }
 
