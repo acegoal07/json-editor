@@ -155,7 +155,7 @@ class editor {
     * Returns a joined string from the array path
     *
     * @param {String} path The object path
-    * @param {String} joiner The character to join the data with
+    * @param {String} joiner The character to join the data with (default: `,`)
     * @returns {String} The data string
     */
    arrayToString({path = null, joiner = ","}) {
@@ -490,21 +490,38 @@ exports.readFile = function(path) {
 }
 
 /**
- * Retunes a map filed with all the data from the files in the folder
+ * Returnes the data from all the json files in a folder either as a map or array
  *
  * @param {String} path The path to the folder containing the files
+ * @param {"Map" | "Array"} format how the data will be presented (default: `Map`)
  * @returns {Map} A map of the data from the files
  */
-exports.readAllFiles = function(path) {
+exports.readAllFiles = function(path, format = "Map") {
    if (!path) {
       throw new Error("ERROR with readAllFiles: path is null");
    }
-   const dataMap = new Map();
-   for (const file of fs.readdirSync(path)) {
-      if (!file.toLowerCase().endsWith(".json")) {
-      } else {
-         dataMap.set(file, rJson(`${path}/${file}`));
+   if (format === "Array") {
+      let array = new Array();
+      for (const file of fs.readdirSync(path)) {
+         if (!file.toLowerCase().endsWith(".json")) {
+         } else {
+            const data = 
+               {
+                  file: file.toLowerCase().replace(".json", ""),
+                  data: rJson(`${path}/${file}`)
+               }
+            array.push(data);
+         }
       }
+      return array;
+   } else {
+      const map = new Map();
+      for (const file of fs.readdirSync(path)) {
+         if (!file.toLowerCase().endsWith(".json")) {
+         } else {
+            map.set(file.toLowerCase().replace(".json", ""), rJson(`${path}/${file}`));
+         }
+      }
+      return map;
    }
-   return dataMap;
 }
