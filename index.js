@@ -187,9 +187,6 @@ class editor {
       if (!path) {
          throw new Error("set ERROR: path is null")
       }
-      if (!value) {
-         throw new Error("set ERROR: value is null")
-      }
       if (typeof path === "object") {
          iterateObject(path, (val, n) => {
             setValue(this.data, n, val, options);
