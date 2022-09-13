@@ -6,17 +6,23 @@ const findValue = require("find-value"),
    os = require('os');
 
 /**
- * The json editor
+ * The json editor 
+ * 
+ * @version `1.3.9`
+ * @author `acegoal07`
+ * 
+ * @param {String} path
+ * @param {Object} options
  */
-class editor {
+class JsonEditor {
    constructor (path, options) {
       this.options = options = options || {}
          options.stringify_width = options.stringify_width || 3
          options.stringify_fn = options.stringify_fn || null
          options.stringify_eol = options.stringify_eol || false
          options.ignore_dots = options.ignore_dots || false;
-      this.path = path
-      this.data = this.read()
+      this.path = path;
+      this.data = this.read();
    }
 
    /**
@@ -47,9 +53,9 @@ class editor {
          if (this.options.ignore_dots) {
             return this.data[path];
          }
-         return findValue(this.data, path)
+         return findValue(this.data, path);
       }
-      return this.toObject()
+      return this.toObject();
    }
    /**
     * Write the JSON file
@@ -60,11 +66,11 @@ class editor {
     */
    write(content, callback) {
       if (callback) {
-            fs.writeFile(this.path, content, callback)
+            fs.writeFile(this.path, content, callback);
       } else {
-            fs.writeFileSync(this.path, content)
+            fs.writeFileSync(this.path, content);
       }
-      return this
+      return this;
    }
 
    /**
@@ -73,7 +79,7 @@ class editor {
     * @param {Function} callback The callback function
     */
    empty(callback) {
-      return this.write("{}", callback)
+      return this.write("{}", callback);
    }
 
    /**
@@ -83,7 +89,7 @@ class editor {
     */
    emptyArray(path) {
       if (!path) {
-         throw new Error("emptyArray ERROR: path is null")
+         throw new Error("emptyArray ERROR: path is null");
       }
       const data = this.get(path);
       if (!Array.isArray(data)) {
@@ -99,11 +105,11 @@ class editor {
     */
    emptyObject(path) {
       if (!path) {
-         throw new Error("emptyObject ERROR: path is null")
+         throw new Error("emptyObject ERROR: path is null");
       }
-      const data = this.get(path)
+      const data = this.get(path);
       if (typeof data !== "object") {
-         throw new Error("emptyObject ERROR: The data is not an object")
+         throw new Error("emptyObject ERROR: The data is not an object");
       }
       return this.set(path, {});
    }
@@ -117,14 +123,14 @@ class editor {
    read(callback) {
       if (!callback) {
             try {
-               return rJson(this.path)
+               return rJson(this.path);
             } catch (error) {
-               return {}
+               return {};
             }
       }
       rJson(this.path, function (err, data) {
-            data = err ? {} : data
-            callback(null, data)
+            data = err ? {} : data;
+            callback(null, data);
       })
    }
 
@@ -185,7 +191,7 @@ class editor {
     */
    set(path, value, options) {
       if (!path) {
-         throw new Error("set ERROR: path is null")
+         throw new Error("set ERROR: path is null");
       }
       if (typeof path === "object") {
          iterateObject(path, (val, n) => {
@@ -210,7 +216,7 @@ class editor {
     */
    unset(path) {
       if (!path) {
-         throw new Error("unset ERROR: path is null")
+         throw new Error("unset ERROR: path is null");
       }
       this.set(path, undefined);
       return this;
@@ -225,7 +231,7 @@ class editor {
     */
    push(path, value) {
       if (!path) {
-         throw new Error("push ERROR: path is null")
+         throw new Error("push ERROR: path is null");
       }
       let data = this.get(path);
       data = (data === undefined) ? [] : data;
@@ -238,6 +244,29 @@ class editor {
    }
 
    /**
+    * Switches a boolean data type between true and false
+    *
+    * @param {String} path The object path
+    * @returns {JsonEditor} The `JsonEditor` instance
+    */
+   trigger(path) {
+      if (!path) {
+         throw new Error("trigger ERROR: path is null");
+      }
+      let data = this.get(path);
+      if (typeof data != "boolean") {
+         throw new Error("trigger ERROR: The data path leads to data that is not boolean");
+      }
+      if (data) {
+         data = false;
+      } else {
+         data = true;
+      }
+      this.set(path, data);
+      return this;
+   }
+
+   /**
     * Pushes the data to the bottom of the specified array
     *
     * @param {String} path The object path
@@ -246,7 +275,7 @@ class editor {
     */
    unshift(path, value) {
       if (!path) {
-         throw new Error("unshift ERROR: path is null")
+         throw new Error("unshift ERROR: path is null");
       }
       let data = this.get(path);
       data = (data === undefined) ? [] : data;
@@ -254,7 +283,7 @@ class editor {
             throw new Error("unshift ERROR: The data is not an array");
          }
       data.unshift(value);
-      this.set(path,data);
+      this.set(path, data);
       return this;
    }
 
@@ -266,7 +295,7 @@ class editor {
     */
    popLast(path) {
       if (!path) {
-         throw new Error("popLast ERROR: path is null")
+         throw new Error("popLast ERROR: path is null");
       }
       let data = this.get(path);
       if (!Array.isArray(data)) {
@@ -286,7 +315,7 @@ class editor {
     */
    popTo(path, position) {
       if (!path) {
-         throw new Error("popTo ERROR: path is null")
+         throw new Error("popTo ERROR: path is null");
       }
       let data = this.get(path);
       if (!Array.isArray(data)) {
@@ -308,7 +337,7 @@ class editor {
     */
    popFirst(path) {
       if (!path) {
-         throw new Error("popFirst ERROR: path is null")
+         throw new Error("popFirst ERROR: path is null");
       }
       let data = this.get(path);
       if (!Array.isArray(data)) {
@@ -348,6 +377,45 @@ class editor {
       exports.deleteFile(this.path);
       return;
    }
+
+   /**
+    * Copy's the data from one path to a another
+    * 
+    * @param {String} path The object path to the data you want to copy
+    * @param {String} copyPath The object path to the place you wanna put the data
+    * @returns {JsonEditor} The `JsonEditor` instance
+    */
+   copy(path, copyPath) {
+      if (!path) {
+         throw new Error("copy ERROR: path is null");
+      }
+      if (!copyPath) {
+         throw new Error("copy ERROR: copyPath is null");
+      }
+      let data = this.get(path);
+      this.set(copyPath, data);
+      return this;
+   }
+
+   /**
+    * Moves the data to a new path and deletes the original
+    * 
+    * @param {String} oldPath The object path to the data you want to move
+    * @param {String} newPath The object path to the place you wanna put the data
+    * @returns {JsonEditor} The `JsonEditor` instance
+    */
+   move(oldPath, newPath) {
+      if (!oldPath) {
+         throw new Error("move ERROR: oldPath is null");
+      }
+      if (!newPath) {
+         throw new Error("move ERROR: newPath is null");
+      }
+      let data = this.get(oldPath);
+      this.set(newPath, data);
+      this.unset(oldPath);
+      return this;
+   }
 }
 
 /**
@@ -366,14 +434,13 @@ class editor {
  *  - `stringify_eol` (Boolean): Whether to add the new line at the end of the file or not (default: `false`)
  *  - `ignore_dots` (Boolean): Whether to use the path including dots or have an object structure (default: `false`)
  *  - `autosave` (Boolean): Save the file when setting some data in it
- * @returns {editor}
+ * @returns {JsonEditor}
  */
-
 exports.editFile = function(path, options) {
    if (!path) {
       throw new Error("ERROR with editFile: Path is null")
    }
-   return new editor(path, options)
+   return new JsonEditor(path, options);
 }
 
 /**
@@ -381,7 +448,6 @@ exports.editFile = function(path, options) {
  *
  * @param {String} path The path to the JSON file
  * @param {String} data The data you would like to populate the file with
- * @returns {editor}
  */
 exports.createFile = function(path, data = `{}`) {
    if (!path) {
