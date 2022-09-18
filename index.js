@@ -57,6 +57,7 @@ class JsonEditor {
       }
       return this.toObject();
    }
+
    /**
     * Write the JSON file
     *
@@ -374,8 +375,7 @@ class JsonEditor {
     * Deletes the file that's being edited
     */
    delete() {
-      exports.deleteFile(this.path);
-      return;
+      return exports.deleteFile(this.path);
    }
 
    /**
@@ -440,6 +440,9 @@ exports.editFile = function(path, options) {
    if (!path) {
       throw new Error("ERROR with editFile: Path is null")
    }
+   if (!exports.fileExists(path)) {
+      throw new Error(`ERROR with editFile: File ${path} does not exists`);
+   }
    return new JsonEditor(path, options);
 }
 
@@ -468,6 +471,9 @@ exports.deleteFile = function(path) {
    if (!path) {
       throw new Error("ERROR with deleteFile: path is null");
    }
+   if (!exports.fileExists(path)) {
+      throw new Error(`ERROR with deleteFile: File ${path} does not exists`);
+   }
    fs.unlink(path, function (error) {
       if (error) throw error;
       return;
@@ -483,6 +489,9 @@ exports.deleteFile = function(path) {
 exports.copyFile = function(path, copyPath = null) {
    if (!path) {
       throw new Error("ERROR with copyFile: path is null");
+   }
+   if (!exports.fileExists(path)) {
+      throw new Error(`ERROR with copyFile: File ${path} does not exists`);
    }
    if (!copyPath) {
       fs.copyFile(path, path.replace(".json","-copy.json"), function (error) {
@@ -506,6 +515,9 @@ exports.moveFile = function(oldPath, newPath) {
    if (!oldPath) {
       throw new Error("ERROR with moveFile: oldPath is null");
    }
+   if (!exports.fileExists(oldPath)) {
+      throw new Error(`ERROR with moveFile: File ${path} does not exists`);
+   }
    if (!newPath) {
       throw new Error("ERROR with moveFile: newPath is null");
    }
@@ -526,6 +538,9 @@ exports.renameFile = function(path, newName) {
    if (!path) {
       throw new Error("ERROR with renameFile: path is null");
    }
+   if (!exports.fileExists(path)) {
+      throw new Error(`ERROR with renameFile: File ${path} does not exists`);
+   }
    if (!newName) {
       throw new Error("ERROR with renameFile: newName is null")
    }
@@ -545,6 +560,9 @@ exports.readFile = function(path) {
    if (!path) {
       throw new Error("ERROR with readFile: path is null");
    }
+   if (!exports.fileExists(path)) {
+      throw new Error(`ERROR with readFile: File ${path} does not exists`);
+   }
    return rJson(path);
 }
 
@@ -558,6 +576,9 @@ exports.readFile = function(path) {
 exports.readAllFiles = function(path, format = "Map") {
    if (!path) {
       throw new Error("ERROR with readAllFiles: path is null");
+   }
+   if (!exports.folderExists(path)) {
+      throw new Error(`ERROR with readAllFiles: Folder ${path} does not exists`);
    }
    if (format === "Array") {
       let array = new Array();
@@ -583,4 +604,37 @@ exports.readAllFiles = function(path, format = "Map") {
       }
       return map;
    }
+}
+
+/**
+ * Returns a boolean whether or not the file exits
+ * 
+ * @param {String} path The path to the file
+ * @returns {Boolean}
+ */
+exports.fileExists = function(path) {
+   if (!path) {
+      throw new Error("ERROR with fileExists: path is null");
+   }
+   fs.readFile(path, 'utf8' , async(error, data) => {
+      if (error) return false;
+      return true;
+   })
+}
+
+/**
+ * Returns a boolean whether or not the folder exits
+ * 
+ * @param {String} path The path to the folder
+ * @returns {Boolean}
+ */
+exports.folderExists = function(path) {
+   if (!path) {
+      throw new Error("ERROR with folderExists: path is null");
+   }
+   if (fs.existsSync(path)) {
+      return true;
+   } else {
+      return false
+   }   
 }
