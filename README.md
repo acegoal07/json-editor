@@ -22,4 +22,4 @@ If you experience any issues or would like to recommend a feature open an issue 
 
 If your interested in supporting my projects you can find donation options <a href="https://acegoal07.dev/donate">here</a>
 
-You can find information on how to use this package on the github wiki which can ben found <a href="https://github.com/acegoal07/json-editor/wiki">here</a>
+You can find information on how to use this package on the github wiki which can be found <a href="https://github.com/acegoal07/json-editor/wiki">here</a>
