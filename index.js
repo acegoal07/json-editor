@@ -46,7 +46,7 @@ class JsonEditor {
     * Get a value in a specific path
     *
     * @param {String} path The object path
-    * @returns {Value} The object path value
+    * @returns {Anything} The object path value
     */
    get(path) {
       if (path) {
@@ -280,9 +280,9 @@ class JsonEditor {
       }
       let data = this.get(path);
       data = (data === undefined) ? [] : data;
-         if (!Array.isArray(data)) {
-            throw new Error("unshift ERROR: The data is not an array");
-         }
+      if (!Array.isArray(data)) {
+         throw new Error("unshift ERROR: The data is not an array");
+      }
       data.unshift(value);
       this.set(path, data);
       return this;
@@ -440,7 +440,7 @@ exports.editFile = function(path, options) {
    if (!path) {
       throw new Error("ERROR with editFile: Path is null")
    }
-   if (!exports.fileExists(path)) {
+   if (!exports.fileExist(path)) {
       throw new Error(`ERROR with editFile: File ${path} does not exists`);
    }
    return new JsonEditor(path, options);
@@ -471,7 +471,7 @@ exports.deleteFile = function(path) {
    if (!path) {
       throw new Error("ERROR with deleteFile: path is null");
    }
-   if (!exports.fileExists(path)) {
+   if (!exports.fileExist(path)) {
       throw new Error(`ERROR with deleteFile: File ${path} does not exists`);
    }
    fs.unlink(path, function (error) {
@@ -490,7 +490,7 @@ exports.copyFile = function(path, copyPath = null) {
    if (!path) {
       throw new Error("ERROR with copyFile: path is null");
    }
-   if (!exports.fileExists(path)) {
+   if (!exports.fileExist(path)) {
       throw new Error(`ERROR with copyFile: File ${path} does not exists`);
    }
    if (!copyPath) {
@@ -515,7 +515,7 @@ exports.moveFile = function(oldPath, newPath) {
    if (!oldPath) {
       throw new Error("ERROR with moveFile: oldPath is null");
    }
-   if (!exports.fileExists(oldPath)) {
+   if (!exports.fileExist(oldPath)) {
       throw new Error(`ERROR with moveFile: File ${path} does not exists`);
    }
    if (!newPath) {
@@ -538,7 +538,7 @@ exports.renameFile = function(path, newName) {
    if (!path) {
       throw new Error("ERROR with renameFile: path is null");
    }
-   if (!exports.fileExists(path)) {
+   if (!exports.fileExist(path)) {
       throw new Error(`ERROR with renameFile: File ${path} does not exists`);
    }
    if (!newName) {
@@ -560,7 +560,7 @@ exports.readFile = function(path) {
    if (!path) {
       throw new Error("ERROR with readFile: path is null");
    }
-   if (!exports.fileExists(path)) {
+   if (!exports.fileExist(path)) {
       throw new Error(`ERROR with readFile: File ${path} does not exists`);
    }
    return rJson(path);
@@ -577,7 +577,7 @@ exports.readAllFiles = function(path, format = "Map") {
    if (!path) {
       throw new Error("ERROR with readAllFiles: path is null");
    }
-   if (!exports.folderExists(path)) {
+   if (!exports.folderExist(path)) {
       throw new Error(`ERROR with readAllFiles: Folder ${path} does not exists`);
    }
    if (format === "Array") {
@@ -612,9 +612,9 @@ exports.readAllFiles = function(path, format = "Map") {
  * @param {String} path The path to the file
  * @returns {Boolean}
  */
-exports.fileExists = function(path) {
+exports.fileExist = function(path) {
    if (!path) {
-      throw new Error("ERROR with fileExists: path is null");
+      throw new Error("ERROR with fileExist: path is null");
    }
    fs.readFile(path, 'utf8' , async(error, data) => {
       if (error) return false;
@@ -628,9 +628,9 @@ exports.fileExists = function(path) {
  * @param {String} path The path to the folder
  * @returns {Boolean}
  */
-exports.folderExists = function(path) {
+exports.folderExist = function(path) {
    if (!path) {
-      throw new Error("ERROR with folderExists: path is null");
+      throw new Error("ERROR with folderExist: path is null");
    }
    if (fs.existsSync(path)) {
       return true;
