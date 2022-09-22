@@ -75,6 +75,25 @@ class JsonEditor {
    }
 
    /**
+    * Copy's the data from a file into the file your editing
+    * 
+    * @param {String} path The path to the JSON file
+    * @param {Boolean} layout The is used to add a layout out to the data being writen to the file
+    * @returns {JsonEditor} The `JsonEditor` instance
+    */
+   writeCopy(path, layout = false) {
+      if (!path) {
+         throw new Error("writeCopy ERROR: path is null");
+      }
+      if (layout) {
+         this.write(JSON.stringify(exports.readFile(path), null, 2));
+      } else {
+         this.write(JSON.stringify(exports.readFile(path)));
+      }
+      return this;
+   }
+
+   /**
     * Empty the JSON file content
     *
     * @param {Function} callback The callback function
@@ -616,10 +635,7 @@ exports.fileExist = function(path) {
    if (!path) {
       throw new Error("ERROR with fileExist: path is null");
    }
-   fs.readFile(path, 'utf8' , async(error, data) => {
-      if (error) return false;
-      return true;
-   })
+   return fs.existsSync(path);
 }
 
 /**
