@@ -8,7 +8,7 @@ const findValue = require("find-value"),
 /**
  * The json editor 
  * 
- * @version `1.3.9`
+ * @version `1.1.0`
  * @author `acegoal07`
  * 
  * @param {String} path
