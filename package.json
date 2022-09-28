@@ -2,7 +2,8 @@
    "name": "@acegoal07/json-editor",
    "version": "1.1.0",
    "description": "A simple json file editor",
-   "main": "index",
+   "main": "index.js",
+   "types": "types",
    "repository": {
       "type": "git",
       "url": "git+https://github.com/acegoal07/json-editor.git"

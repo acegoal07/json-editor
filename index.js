@@ -471,7 +471,7 @@ exports.editFile = function(path, options) {
  * @param {String} path The path to the JSON file
  * @param {String} data The data you would like to populate the file with
  */
-exports.createFile = function(path, data = `{}`) {
+exports.createFile = async(path, data = `{}`) => {
    if (!path) {
       throw new Error("ERROR with createFile: Path is null");
    }
@@ -486,7 +486,7 @@ exports.createFile = function(path, data = `{}`) {
  *
  * @param {String} path The path to the JSON file
  */
-exports.deleteFile = function(path) {
+exports.deleteFile = async(path) => {
    if (!path) {
       throw new Error("ERROR with deleteFile: path is null");
    }
@@ -505,7 +505,7 @@ exports.deleteFile = function(path) {
  * @param {String} path The path to the JSON file
  * @param {String} copyPath The path to the location you want the new file saved
  */
-exports.copyFile = function(path, copyPath = null) {
+exports.copyFile = async(path, copyPath = null) => {
    if (!path) {
       throw new Error("ERROR with copyFile: path is null");
    }
@@ -530,7 +530,7 @@ exports.copyFile = function(path, copyPath = null) {
  * @param {String} oldPath The path to the JSON file
  * @param {String} newPath The path to the location you want to move the file
  */
-exports.moveFile = function(oldPath, newPath) {
+exports.moveFile = async(oldPath, newPath) => {
    if (!oldPath) {
       throw new Error("ERROR with moveFile: oldPath is null");
    }
@@ -553,7 +553,7 @@ exports.moveFile = function(oldPath, newPath) {
  * @param {String} path The path to the JSON file
  * @param {String} newName The new name that will be set for the file
  */
-exports.renameFile = function(path, newName) {
+exports.renameFile = async(path, newName) => {
    if (!path) {
       throw new Error("ERROR with renameFile: path is null");
    }
@@ -575,7 +575,7 @@ exports.renameFile = function(path, newName) {
  * @param {String} path The path to the JSON file
  * @returns {Object} The data from the file
  */
-exports.readFile = function(path) {
+exports.readFile = async(path) => {
    if (!path) {
       throw new Error("ERROR with readFile: path is null");
    }
@@ -592,7 +592,7 @@ exports.readFile = function(path) {
  * @param {"Map" | "Array"} format how the data will be presented (default: `Map`)
  * @returns {Map} A map of the data from the files
  */
-exports.readAllFiles = function(path, format = "Map") {
+exports.readAllFiles = async(path, format = "Map") => {
    if (!path) {
       throw new Error("ERROR with readAllFiles: path is null");
    }
@@ -631,7 +631,7 @@ exports.readAllFiles = function(path, format = "Map") {
  * @param {String} path The path to the file
  * @returns {Boolean}
  */
-exports.fileExist = function(path) {
+exports.fileExist = async(path) => {
    if (!path) {
       throw new Error("ERROR with fileExist: path is null");
    }
@@ -644,13 +644,9 @@ exports.fileExist = function(path) {
  * @param {String} path The path to the folder
  * @returns {Boolean}
  */
-exports.folderExist = function(path) {
+exports.folderExist = async(path) => {
    if (!path) {
       throw new Error("ERROR with folderExist: path is null");
    }
-   if (fs.existsSync(path)) {
-      return true;
-   } else {
-      return false
-   }   
+   return fs.existsSync(path);  
 }
