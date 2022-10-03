@@ -597,9 +597,7 @@ exports.readAllFiles = async(path, format = "Map") => {
    if (format === "Array") {
       let array = new Array();
       for (const file of fs.readdirSync(path)) {
-         if (!file.toLowerCase().endsWith(".json")) {
-            void(0);
-         } else {
+         if (file.toLowerCase().endsWith(".json")) {
             array.push(
                {
                   file: file.toLowerCase().replace(".json", ""),
@@ -607,16 +605,17 @@ exports.readAllFiles = async(path, format = "Map") => {
                }
             );
          }
+         void(0);
       }
       return array;
    } else {
       const map = new Map();
       for (const file of fs.readdirSync(path)) {
-         if (!file.toLowerCase().endsWith(".json")) {
-            void(0);
-         } else {
+         if (file.toLowerCase().endsWith(".json")) {
             map.set(file.toLowerCase().replace(".json", ""), rJson(`${path}/${file}`));
+            
          }
+         void(0);
       }
       return map;
    }
