@@ -78,7 +78,7 @@ class JsonEditor {
     * Copy's the data from a file into the file your editing
     * 
     * @param {String} path The path to the JSON file
-    * @param {Boolean} layout The is used to add a layout out to the data being writen to the file
+    * @param {Boolean} layout The is used to add a layout out to the data being written to the file
     * @returns {JsonEditor} The `JsonEditor` instance
     */
    writeCopy(path, layout = false) {
@@ -197,7 +197,7 @@ class JsonEditor {
       if (!joiner) {
          throw new Error("arrayToString ERROR: joiner is null");
       }
-      if (data.length = 1) return data;
+      if (data.length === 1) return data;
       return data.join(joiner);
    }
 
@@ -376,7 +376,7 @@ class JsonEditor {
     */
    getKeys(path = null) {
       if (!path) {
-         const data = this.get(path);
+         const data = this.data;
          if (typeof data != "object") {
             throw new Error("getKeys ERROR: The data is not an object");
          }
@@ -477,7 +477,6 @@ exports.createFile = async(path, data = `{}`) => {
    }
    fs.writeFile(path, data, function (error) {
       if (error) throw error;
-      return;
    });
 }
 
@@ -495,7 +494,6 @@ exports.deleteFile = async(path) => {
    }
    fs.unlink(path, function (error) {
       if (error) throw error;
-      return;
    });
 }
 
@@ -519,7 +517,6 @@ exports.copyFile = async(path, copyPath = null) => {
    } else {
       fs.copyFile(path, copyPath, function (error) {
          if (error) throw error;
-         return
       });
    }
 }
@@ -544,7 +541,6 @@ exports.moveFile = async(oldPath, newPath) => {
       if (error) throw error;
    });
    exports.deleteFile(oldPath);
-   return;
 }
 
 /**
@@ -565,7 +561,6 @@ exports.renameFile = async(path, newName) => {
    }
    fs.rename(path, path.replace(path.split(/[\\/]/).pop(), newName), function (error) {
       if (error) throw error;
-      return;
    });
 }
 
@@ -603,6 +598,7 @@ exports.readAllFiles = async(path, format = "Map") => {
       let array = new Array();
       for (const file of fs.readdirSync(path)) {
          if (!file.toLowerCase().endsWith(".json")) {
+            void(0);
          } else {
             array.push(
                {
@@ -617,6 +613,7 @@ exports.readAllFiles = async(path, format = "Map") => {
       const map = new Map();
       for (const file of fs.readdirSync(path)) {
          if (!file.toLowerCase().endsWith(".json")) {
+            void(0);
          } else {
             map.set(file.toLowerCase().replace(".json", ""), rJson(`${path}/${file}`));
          }
