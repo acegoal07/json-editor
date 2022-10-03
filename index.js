@@ -471,7 +471,22 @@ exports.editFile = function(path, options) {
  * @param {String} path The path to the JSON file
  * @param {String} data The data you would like to populate the file with
  */
-exports.createFile = async(path, data = `{}`) => {
+ exports.createFile = function(path, data = `{}`) {
+   if (!path) {
+      throw new Error("ERROR with createFile: Path is null");
+   }
+   fs.writeFile(path, data, function (error) {
+      if (error) throw error;
+   });
+}
+
+/**
+ * Creates a json file and allows for you to wait for it using await
+ *
+ * @param {String} path The path to the JSON file
+ * @param {String} data The data you would like to populate the file with
+ */
+exports.createFileSync = async(path, data = `{}`) => {
    if (!path) {
       throw new Error("ERROR with createFile: Path is null");
    }
@@ -485,7 +500,24 @@ exports.createFile = async(path, data = `{}`) => {
  *
  * @param {String} path The path to the JSON file
  */
-exports.deleteFile = async(path) => {
+ exports.deleteFile = function(path) {
+   if (!path) {
+      throw new Error("ERROR with deleteFile: path is null");
+   }
+   if (!exports.fileExist(path)) {
+      throw new Error(`ERROR with deleteFile: File ${path} does not exists`);
+   }
+   fs.unlink(path, function (error) {
+      if (error) throw error;
+   });
+}
+
+/**
+ * Deletes the specified json file and allows for you to wait for it using await
+ *
+ * @param {String} path The path to the JSON file
+ */
+exports.deleteFileSync = async(path) => {
    if (!path) {
       throw new Error("ERROR with deleteFile: path is null");
    }
@@ -503,7 +535,31 @@ exports.deleteFile = async(path) => {
  * @param {String} path The path to the JSON file
  * @param {String} copyPath The path to the location you want the new file saved
  */
-exports.copyFile = async(path, copyPath = null) => {
+ exports.copyFile = function(path, copyPath = null) {
+   if (!path) {
+      throw new Error("ERROR with copyFile: path is null");
+   }
+   if (!exports.fileExist(path)) {
+      throw new Error(`ERROR with copyFile: File ${path} does not exists`);
+   }
+   if (!copyPath) {
+      fs.copyFile(path, path.replace(".json","-copy.json"), function (error) {
+         if (error) throw error;
+      });
+   } else {
+      fs.copyFile(path, copyPath, function (error) {
+         if (error) throw error;
+      });
+   }
+}
+
+/**
+ * Duplicates the file you specify and allows for you to wait for it using await
+ *
+ * @param {String} path The path to the JSON file
+ * @param {String} copyPath The path to the location you want the new file saved
+ */
+exports.copyFileSync = async(path, copyPath = null) => {
    if (!path) {
       throw new Error("ERROR with copyFile: path is null");
    }
@@ -527,7 +583,29 @@ exports.copyFile = async(path, copyPath = null) => {
  * @param {String} oldPath The path to the JSON file
  * @param {String} newPath The path to the location you want to move the file
  */
-exports.moveFile = async(oldPath, newPath) => {
+ exports.moveFile = function(oldPath, newPath) {
+   if (!oldPath) {
+      throw new Error("ERROR with moveFile: oldPath is null");
+   }
+   if (!exports.fileExist(oldPath)) {
+      throw new Error(`ERROR with moveFile: File ${path} does not exists`);
+   }
+   if (!newPath) {
+      throw new Error("ERROR with moveFile: newPath is null");
+   }
+   fs.copyFile(oldPath, newPath, function (error) {
+      if (error) throw error;
+   });
+   exports.deleteFile(oldPath);
+}
+
+/**
+ * Moves the file from the old location to the new location and allows for you to wait for it using await
+ *
+ * @param {String} oldPath The path to the JSON file
+ * @param {String} newPath The path to the location you want to move the file
+ */
+exports.moveFileSync = async(oldPath, newPath) => {
    if (!oldPath) {
       throw new Error("ERROR with moveFile: oldPath is null");
    }
@@ -549,7 +627,28 @@ exports.moveFile = async(oldPath, newPath) => {
  * @param {String} path The path to the JSON file
  * @param {String} newName The new name that will be set for the file
  */
-exports.renameFile = async(path, newName) => {
+ exports.renameFile = function(path, newName) {
+   if (!path) {
+      throw new Error("ERROR with renameFile: path is null");
+   }
+   if (!exports.fileExist(path)) {
+      throw new Error(`ERROR with renameFile: File ${path} does not exists`);
+   }
+   if (!newName) {
+      throw new Error("ERROR with renameFile: newName is null")
+   }
+   fs.rename(path, path.replace(path.split(/[\\/]/).pop(), newName), function (error) {
+      if (error) throw error;
+   });
+}
+
+/**
+ * Renames the specified file to the new provided name and allows for you to wait for it using await
+ *
+ * @param {String} path The path to the JSON file
+ * @param {String} newName The new name that will be set for the file
+ */
+exports.renameFileSync = async(path, newName) => {
    if (!path) {
       throw new Error("ERROR with renameFile: path is null");
    }
@@ -570,7 +669,23 @@ exports.renameFile = async(path, newName) => {
  * @param {String} path The path to the JSON file
  * @returns {Object} The data from the file
  */
-exports.readFile = async(path) => {
+ exports.readFile = function(path) {
+   if (!path) {
+      throw new Error("ERROR with readFile: path is null");
+   }
+   if (!exports.fileExist(path)) {
+      throw new Error(`ERROR with readFile: File ${path} does not exists`);
+   }
+   return rJson(path);
+}
+
+/**
+ * Returns the data from the specified file and allows for you to wait for it using await
+ *
+ * @param {String} path The path to the JSON file
+ * @returns {Object} The data from the file
+ */
+exports.readFileSync = async(path) => {
    if (!path) {
       throw new Error("ERROR with readFile: path is null");
    }
@@ -587,7 +702,48 @@ exports.readFile = async(path) => {
  * @param {"Map" | "Array"} format how the data will be presented (default: `Map`)
  * @returns {Map} A map of the data from the files
  */
-exports.readAllFiles = async(path, format = "Map") => {
+ exports.readAllFiles = function(path, format = "Map") {
+   if (!path) {
+      throw new Error("ERROR with readAllFiles: path is null");
+   }
+   if (!exports.folderExist(path)) {
+      throw new Error(`ERROR with readAllFiles: Folder ${path} does not exists`);
+   }
+   if (format === "Array") {
+      let array = new Array();
+      for (const file of fs.readdirSync(path)) {
+         if (file.toLowerCase().endsWith(".json")) {
+            array.push(
+               {
+                  file: file.toLowerCase().replace(".json", ""),
+                  data: rJson(`${path}/${file}`)
+               }
+            );
+         }
+         void(0);
+      }
+      return array;
+   } else {
+      const map = new Map();
+      for (const file of fs.readdirSync(path)) {
+         if (file.toLowerCase().endsWith(".json")) {
+            map.set(file.toLowerCase().replace(".json", ""), rJson(`${path}/${file}`));
+            
+         }
+         void(0);
+      }
+      return map;
+   }
+}
+
+/**
+ * Returns the data from all the json files in a folder either as a map or array and allows for you to wait for it using await
+ *
+ * @param {String} path The path to the folder containing the files
+ * @param {"Map" | "Array"} format how the data will be presented (default: `Map`)
+ * @returns {Map} A map of the data from the files
+ */
+exports.readAllFilesSync = async(path, format = "Map") => {
    if (!path) {
       throw new Error("ERROR with readAllFiles: path is null");
    }
@@ -627,7 +783,20 @@ exports.readAllFiles = async(path, format = "Map") => {
  * @param {String} path The path to the file
  * @returns {Boolean}
  */
-exports.fileExist = async(path) => {
+exports.fileExist = function(path) {
+   if (!path) {
+      throw new Error("ERROR with fileExist: path is null");
+   }
+   return fs.existsSync(path);
+}
+
+/**
+ * Returns a boolean whether or not the file exits and allows for you to wait for it using await
+ * 
+ * @param {String} path The path to the file
+ * @returns {Boolean}
+ */
+exports.fileExistSync = async(path) => {
    if (!path) {
       throw new Error("ERROR with fileExist: path is null");
    }
@@ -640,7 +809,20 @@ exports.fileExist = async(path) => {
  * @param {String} path The path to the folder
  * @returns {Boolean}
  */
-exports.folderExist = async(path) => {
+exports.folderExist = function(path) {
+   if (!path) {
+      throw new Error("ERROR with folderExist: path is null");
+   }
+   return fs.existsSync(path);  
+}
+
+/**
+ * Returns a boolean whether or not the folder exits and allows for you to wait for it using await
+ * 
+ * @param {String} path The path to the folder
+ * @returns {Boolean}
+ */
+exports.folderExistSync = async(path) => {
    if (!path) {
       throw new Error("ERROR with folderExist: path is null");
    }

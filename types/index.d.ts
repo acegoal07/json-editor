@@ -5,15 +5,24 @@ export function editFile(path: string, options: {
     ignore_dots?: boolean;
     autosave?: boolean;
 }): JsonEditor;
-export function createFile(path: string, data?: string): Promise<void>;
-export function deleteFile(path: string): Promise<void>;
-export function copyFile(path: string, copyPath?: string): Promise<void>;
-export function moveFile(oldPath: string, newPath: string): Promise<void>;
-export function renameFile(path: string, newName: string): Promise<void>;
+export function createFile(path: string, data?: string): void;
+export function createFileSync(path: string, data?: string): Promise<void>;
+export function deleteFile(path: string): void;
+export function deleteFileSync(path: string): Promise<void>;
+export function copyFile(path: string, copyPath?: string): void;
+export function copyFileSync(path: string, copyPath?: string): Promise<void>;
+export function moveFile(oldPath: string, newPath: string): void;
+export function moveFileSync(oldPath: string, newPath: string): Promise<void>;
+export function renameFile(path: string, newName: string): void;
+export function renameFileSync(path: string, newName: string): Promise<void>;
 export function readFile(path: string): any;
+export function readFileSync(path: string): any;
 export function readAllFiles(path: string, format?: "Map" | "Array"): Map;
+export function readAllFilesSync(path: string, format?: "Map" | "Array"): Map;
 export function fileExist(path: string): boolean;
+export function fileExistSync(path: string): boolean;
 export function folderExist(path: string): boolean;
+export function folderExistSync(path: string): boolean;
 /**
  * The json editor
  *
@@ -54,7 +63,7 @@ declare class JsonEditor {
      * Copy's the data from a file into the file your editing
      *
      * @param {String} path The path to the JSON file
-     * @param {Boolean} layout The is used to add a layout out to the data being writen to the file
+     * @param {Boolean} layout The is used to add a layout out to the data being written to the file
      * @returns {JsonEditor} The `JsonEditor` instance
      */
     writeCopy(path: string, layout?: boolean): JsonEditor;
@@ -175,7 +184,7 @@ declare class JsonEditor {
     /**
      * Deletes the file that's being edited
      */
-    delete(): Promise<void>;
+    delete(): void;
     /**
      * Copy's the data from one path to a another
      *
