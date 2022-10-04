@@ -471,7 +471,7 @@ exports.editFile = function(path, options) {
  * @param {String} path The path to the JSON file
  * @param {String} data The data you would like to populate the file with
  */
- exports.createFile = function(path, data = `{}`) {
+exports.createFile = function(path, data = `{}`) {
    if (!path) {
       throw new Error("ERROR with createFile: Path is null");
    }
@@ -500,7 +500,7 @@ exports.createFileSync = async(path, data = `{}`) => {
  *
  * @param {String} path The path to the JSON file
  */
- exports.deleteFile = function(path) {
+exports.deleteFile = function(path) {
    if (!path) {
       throw new Error("ERROR with deleteFile: path is null");
    }
@@ -535,7 +535,7 @@ exports.deleteFileSync = async(path) => {
  * @param {String} path The path to the JSON file
  * @param {String} copyPath The path to the location you want the new file saved
  */
- exports.copyFile = function(path, copyPath = null) {
+exports.copyFile = function(path, copyPath = null) {
    if (!path) {
       throw new Error("ERROR with copyFile: path is null");
    }
@@ -583,7 +583,7 @@ exports.copyFileSync = async(path, copyPath = null) => {
  * @param {String} oldPath The path to the JSON file
  * @param {String} newPath The path to the location you want to move the file
  */
- exports.moveFile = function(oldPath, newPath) {
+exports.moveFile = function(oldPath, newPath) {
    if (!oldPath) {
       throw new Error("ERROR with moveFile: oldPath is null");
    }
@@ -627,7 +627,7 @@ exports.moveFileSync = async(oldPath, newPath) => {
  * @param {String} path The path to the JSON file
  * @param {String} newName The new name that will be set for the file
  */
- exports.renameFile = function(path, newName) {
+exports.renameFile = function(path, newName) {
    if (!path) {
       throw new Error("ERROR with renameFile: path is null");
    }
@@ -669,7 +669,7 @@ exports.renameFileSync = async(path, newName) => {
  * @param {String} path The path to the JSON file
  * @returns {Object} The data from the file
  */
- exports.readFile = function(path) {
+exports.readFile = function(path) {
    if (!path) {
       throw new Error("ERROR with readFile: path is null");
    }
