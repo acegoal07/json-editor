@@ -702,7 +702,7 @@ exports.readFileSync = async(path) => {
  * @param {"Map" | "Array"} format how the data will be presented (default: `Map`)
  * @returns {Map} A map of the data from the files
  */
- exports.readAllFiles = function(path, format = "Map") {
+exports.readAllFiles = function(path, format = "Map") {
    if (!path) {
       throw new Error("ERROR with readAllFiles: path is null");
    }
