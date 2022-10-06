@@ -507,9 +507,7 @@ exports.deleteFile = function(path) {
    if (!exports.fileExist(path)) {
       throw new Error(`ERROR with deleteFile: File ${path} does not exists`);
    }
-   fs.unlink(path, function (error) {
-      if (error) throw error;
-   });
+   fs.unlinksync(path);
 }
 
 /**
