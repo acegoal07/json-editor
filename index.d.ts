@@ -184,7 +184,7 @@ declare class JsonEditor {
     /**
      * Deletes the file that's being edited
      */
-    delete(): void;
+    delete(): any;
     /**
      * Copy's the data from one path to a another
      *

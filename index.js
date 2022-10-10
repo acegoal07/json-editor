@@ -3,7 +3,8 @@ const findValue = require("find-value"),
    rJson = require("r-json"),
    fs = require("fs"),
    iterateObject = require("iterate-object"),
-   os = require('os');
+   os = require('os'),
+   fileTools = require("@acegoal07/file-tools");
 
 /**
  * The json editor 
@@ -86,9 +87,9 @@ class JsonEditor {
          throw new Error("writeCopy ERROR: path is null");
       }
       if (layout) {
-         this.write(JSON.stringify(exports.readFile(path), null, 2));
+         this.write(JSON.stringify(fileTools.JsonFileTools().readFile(path), null, 2));
       } else {
-         this.write(JSON.stringify(exports.readFile(path)));
+         this.write(JSON.stringify(fileTools.JsonFileTools().readFile(path)));
       }
       return this;
    }
@@ -394,7 +395,7 @@ class JsonEditor {
     * Deletes the file that's being edited
     */
    delete() {
-      return exports.deleteFile(this.path);
+      return fileTools.UniversalFileTools().deleteFile(this.path)
    }
 
    /**
@@ -470,8 +471,10 @@ exports.editFile = function(path, options) {
  *
  * @param {String} path The path to the JSON file
  * @param {String} data The data you would like to populate the file with
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.createFile = function(path, data = `{}`) {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!path) {
       throw new Error("ERROR with createFile: Path is null");
    }
@@ -485,8 +488,10 @@ exports.createFile = function(path, data = `{}`) {
  *
  * @param {String} path The path to the JSON file
  * @param {String} data The data you would like to populate the file with
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.createFileSync = async(path, data = `{}`) => {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!path) {
       throw new Error("ERROR with createFile: Path is null");
    }
@@ -499,8 +504,10 @@ exports.createFileSync = async(path, data = `{}`) => {
  * Deletes the specified json file
  *
  * @param {String} path The path to the JSON file
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.deleteFile = function(path) {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!path) {
       throw new Error("ERROR with deleteFile: path is null");
    }
@@ -514,8 +521,10 @@ exports.deleteFile = function(path) {
  * Deletes the specified json file and allows for you to wait for it using await
  *
  * @param {String} path The path to the JSON file
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.deleteFileSync = async(path) => {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!path) {
       throw new Error("ERROR with deleteFile: path is null");
    }
@@ -532,8 +541,10 @@ exports.deleteFileSync = async(path) => {
  *
  * @param {String} path The path to the JSON file
  * @param {String} copyPath The path to the location you want the new file saved
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.copyFile = function(path, copyPath = null) {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!path) {
       throw new Error("ERROR with copyFile: path is null");
    }
@@ -556,8 +567,10 @@ exports.copyFile = function(path, copyPath = null) {
  *
  * @param {String} path The path to the JSON file
  * @param {String} copyPath The path to the location you want the new file saved
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.copyFileSync = async(path, copyPath = null) => {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!path) {
       throw new Error("ERROR with copyFile: path is null");
    }
@@ -580,8 +593,10 @@ exports.copyFileSync = async(path, copyPath = null) => {
  *
  * @param {String} oldPath The path to the JSON file
  * @param {String} newPath The path to the location you want to move the file
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.moveFile = function(oldPath, newPath) {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!oldPath) {
       throw new Error("ERROR with moveFile: oldPath is null");
    }
@@ -602,8 +617,10 @@ exports.moveFile = function(oldPath, newPath) {
  *
  * @param {String} oldPath The path to the JSON file
  * @param {String} newPath The path to the location you want to move the file
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.moveFileSync = async(oldPath, newPath) => {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!oldPath) {
       throw new Error("ERROR with moveFile: oldPath is null");
    }
@@ -624,8 +641,10 @@ exports.moveFileSync = async(oldPath, newPath) => {
  *
  * @param {String} path The path to the JSON file
  * @param {String} newName The new name that will be set for the file
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.renameFile = function(path, newName) {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!path) {
       throw new Error("ERROR with renameFile: path is null");
    }
@@ -645,8 +664,10 @@ exports.renameFile = function(path, newName) {
  *
  * @param {String} path The path to the JSON file
  * @param {String} newName The new name that will be set for the file
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.renameFileSync = async(path, newName) => {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!path) {
       throw new Error("ERROR with renameFile: path is null");
    }
@@ -666,8 +687,10 @@ exports.renameFileSync = async(path, newName) => {
  *
  * @param {String} path The path to the JSON file
  * @returns {Object} The data from the file
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.readFile = function(path) {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!path) {
       throw new Error("ERROR with readFile: path is null");
    }
@@ -682,8 +705,10 @@ exports.readFile = function(path) {
  *
  * @param {String} path The path to the JSON file
  * @returns {Object} The data from the file
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.readFileSync = async(path) => {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!path) {
       throw new Error("ERROR with readFile: path is null");
    }
@@ -699,8 +724,10 @@ exports.readFileSync = async(path) => {
  * @param {String} path The path to the folder containing the files
  * @param {"Map" | "Array"} format how the data will be presented (default: `Map`)
  * @returns {Map} A map of the data from the files
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.readAllFiles = function(path, format = "Map") {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!path) {
       throw new Error("ERROR with readAllFiles: path is null");
    }
@@ -740,8 +767,10 @@ exports.readAllFiles = function(path, format = "Map") {
  * @param {String} path The path to the folder containing the files
  * @param {"Map" | "Array"} format how the data will be presented (default: `Map`)
  * @returns {Map} A map of the data from the files
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.readAllFilesSync = async(path, format = "Map") => {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!path) {
       throw new Error("ERROR with readAllFiles: path is null");
    }
@@ -780,8 +809,10 @@ exports.readAllFilesSync = async(path, format = "Map") => {
  * 
  * @param {String} path The path to the file
  * @returns {Boolean}
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.fileExist = function(path) {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!path) {
       throw new Error("ERROR with fileExist: path is null");
    }
@@ -793,8 +824,10 @@ exports.fileExist = function(path) {
  * 
  * @param {String} path The path to the file
  * @returns {Boolean}
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.fileExistSync = async(path) => {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!path) {
       throw new Error("ERROR with fileExist: path is null");
    }
@@ -806,8 +839,10 @@ exports.fileExistSync = async(path) => {
  * 
  * @param {String} path The path to the folder
  * @returns {Boolean}
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.folderExist = function(path) {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!path) {
       throw new Error("ERROR with folderExist: path is null");
    }
@@ -819,8 +854,10 @@ exports.folderExist = function(path) {
  * 
  * @param {String} path The path to the folder
  * @returns {Boolean}
+ * @deprecated This feature has been moved to a separate package called @acegoal07/file-tools
  */
 exports.folderExistSync = async(path) => {
+   process.emitWarning("This feature has been moved to a separate package called @acegoal07/file-tools");
    if (!path) {
       throw new Error("ERROR with folderExist: path is null");
    }
