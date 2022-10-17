@@ -460,7 +460,7 @@ exports.editFile = function(path, options) {
    if (!path) {
       throw new Error("ERROR with editFile: Path is null")
    }
-   if (!exports.fileExist(path)) {
+   if (!fileTools().UniversalFileTools().fileExists(path)) {
       throw new Error(`ERROR with editFile: File ${path} does not exists`);
    }
    return new JsonEditor(path, options);
