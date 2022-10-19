@@ -1,6 +1,6 @@
 {
    "name": "@acegoal07/json-editor",
-   "version": "1.1.4",
+   "version": "1.1.5",
    "description": "A simple json file editor",
    "main": "index.js",
    "repository": {
@@ -25,7 +25,7 @@
       "r-json": "^1.2.10",
       "set-value": "^4.1.0",
       "w-json": "^1.3.10",
-      "@acegoal07/file-tools": "^1.0.0"
+      "@acegoal07/file-tools": "^1.0.2"
    },
    "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1"
