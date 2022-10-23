@@ -87,9 +87,9 @@ class JsonEditor {
          throw new Error("writeCopy ERROR: path is null");
       }
       if (layout) {
-         this.write(JSON.stringify(fileTools.JsonFileTools().readFile(path), null, 2));
+         this.write(JSON.stringify(fileTools().JsonFileTools().readFile(path), null, 2));
       } else {
-         this.write(JSON.stringify(fileTools.JsonFileTools().readFile(path)));
+         this.write(JSON.stringify(fileTools().JsonFileTools().readFile(path)));
       }
       return this;
    }
@@ -395,7 +395,7 @@ class JsonEditor {
     * Deletes the file that's being edited
     */
    delete() {
-      return fileTools.UniversalFileTools().deleteFile(this.path)
+      return fileTools().UniversalFileTools().deleteFile(this.path)
    }
 
    /**
