@@ -436,6 +436,30 @@ class JsonEditor {
       this.unset(oldPath);
       return this;
    }
+
+   /**
+    * Renames the section of an object you specify
+    * 
+    * @param {String} path The object path to the section you want to rename
+    * @param {String} newName The new name you want to give the section
+    * @return {JsonEditor} The `JsonEditor` instance
+    */
+   rename(path, newName) {
+      if (!path) {
+         throw new Error("rename ERROR: path is null");
+      }
+      if (!newName) {
+         throw new Error("rename ERROR: newName is null");
+      }
+      // Splits path info and creates new path
+      let splitData = path.split(".");
+      let newPath = path.replace(splitData.pop(), newName);
+      // Runs editor functions to perform change
+      this.copy(path, newPath);
+      this.unset(path);
+      // Returns editor
+      return this;
+   }
 }
 
 /**

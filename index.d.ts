@@ -5,24 +5,6 @@ export function editFile(path: string, options: {
     ignore_dots?: boolean;
     autosave?: boolean;
 }): JsonEditor;
-export function createFile(path: string, data?: string): void;
-export function createFileSync(path: string, data?: string): Promise<void>;
-export function deleteFile(path: string): void;
-export function deleteFileSync(path: string): Promise<void>;
-export function copyFile(path: string, copyPath?: string): void;
-export function copyFileSync(path: string, copyPath?: string): Promise<void>;
-export function moveFile(oldPath: string, newPath: string): void;
-export function moveFileSync(oldPath: string, newPath: string): Promise<void>;
-export function renameFile(path: string, newName: string): void;
-export function renameFileSync(path: string, newName: string): Promise<void>;
-export function readFile(path: string): any;
-export function readFileSync(path: string): any;
-export function readAllFiles(path: string, format?: "Map" | "Array"): Map;
-export function readAllFilesSync(path: string, format?: "Map" | "Array"): Map;
-export function fileExist(path: string): boolean;
-export function fileExistSync(path: string): boolean;
-export function folderExist(path: string): boolean;
-export function folderExistSync(path: string): boolean;
 /**
  * The json editor
  *
@@ -201,5 +183,13 @@ declare class JsonEditor {
      * @returns {JsonEditor} The `JsonEditor` instance
      */
     move(oldPath: string, newPath: string): JsonEditor;
+    /**
+     * Renames the section of an object you specify
+     *
+     * @param {String} path The object path to the section you want to rename
+     * @param {String} newName The new name you want to give the section
+     * @return {JsonEditor} The `JsonEditor` instance
+     */
+    rename(path: string, newName: string): JsonEditor;
 }
 export {};
