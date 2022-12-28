@@ -1,6 +1,6 @@
 {
    "name": "@acegoal07/json-editor",
-   "version": "1.1.6",
+   "version": "1.1.7",
    "description": "A simple json file editor",
    "main": "index.js",
    "repository": {

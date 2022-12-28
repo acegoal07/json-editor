@@ -185,21 +185,21 @@ class JsonEditor {
     * @param {String} joiner The character to join the data with (default: `,`)
     * @returns {String} The data string
     */
-   arrayToString({path = null, joiner = ","}) {
+   arrayToString(settings = {path: null, joiner: ","}) {
       let data;
-      if (!path) {
+      if (!settings.path) {
          data = this.data;
       } else {
-         data = this.get(path);
+         data = this.get(settings.path);
       }
       if (!Array.isArray(data)) {
          throw new Error("arrayToString ERROR: The data is not an array");
       }
-      if (!joiner) {
+      if (!settings.joiner) {
          throw new Error("arrayToString ERROR: joiner is null");
       }
       if (data.length === 1) return data;
-      return data.join(joiner);
+      return data.join(settings.joiner);
    }
 
    /**
