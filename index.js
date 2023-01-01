@@ -1,3 +1,5 @@
+///////////////////////////////////////////////////////////////////////////
+// Dependencies //////////////////////////////////////////////////////////
 const findValue = require("find-value"),
    setValue = require("set-value"),
    rJson = require("r-json"),
@@ -5,7 +7,8 @@ const findValue = require("find-value"),
    iterateObject = require("iterate-object"),
    os = require('os'),
    { UniversalFileTools, JsonFileTools }= require("@acegoal07/file-tools");
-
+///////////////////////////////////////////////////////////////////////////
+// Class /////////////////////////////////////////////////////////////////
 /**
  * The json editor 
  * 
@@ -25,7 +28,6 @@ class JsonEditor {
       this.path = path;
       this.data = this.read();
    }
-
    /**
     * Saves the file and any changes
     *
@@ -42,7 +44,6 @@ class JsonEditor {
       this.write(this.options.stringify_eol ? data + os.EOL : data, callback);
       return this;
    }
-
    /**
     * Get a value in a specific path
     *
@@ -58,7 +59,6 @@ class JsonEditor {
       }
       return this.toObject();
    }
-
    /**
     * Write the JSON file
     *
@@ -74,7 +74,6 @@ class JsonEditor {
       }
       return this;
    }
-
    /**
     * Copy's the data from a file into the file your editing
     * 
@@ -93,7 +92,6 @@ class JsonEditor {
       }
       return this;
    }
-
    /**
     * Empty the JSON file content
     *
@@ -102,7 +100,6 @@ class JsonEditor {
    empty(callback) {
       return this.write("{}", callback);
    }
-
    /**
     * Empty an arrays content
     *
@@ -118,7 +115,6 @@ class JsonEditor {
       }
       return this.set(path, []);
    }
-
    /**
     * Empty an objects content
     *
@@ -134,7 +130,6 @@ class JsonEditor {
       }
       return this.set(path, {});
    }
-
    /**
     * Read the JSON file
     *
@@ -154,7 +149,6 @@ class JsonEditor {
             callback(null, data);
       })
    }
-
    /**
     * Returns a object from the data path
     *
@@ -163,7 +157,6 @@ class JsonEditor {
    toObject() {
       return this.data;
    }
-
    /**
     * Returns a string of the json data
     *
@@ -177,7 +170,6 @@ class JsonEditor {
          return JSON.stringify(this.data);
       }
    }
-
    /**
     * Returns a joined string from the array path
     *
@@ -201,7 +193,6 @@ class JsonEditor {
       if (data.length === 1) return data;
       return data.join(settings.joiner);
    }
-
    /**
     * Set a value in a specific path
     *
@@ -228,7 +219,6 @@ class JsonEditor {
       }
       return this;
    }
-
    /**
     * Remove a path from a JSON object
     *
@@ -242,7 +232,6 @@ class JsonEditor {
       this.set(path, undefined);
       return this;
    }
-
    /**
     * Pushes the data to the top of the specified array
     *
@@ -263,7 +252,6 @@ class JsonEditor {
       this.set(path,data);
       return this;
    }
-
    /**
     * Switches a boolean data type between true and false
     *
@@ -286,7 +274,6 @@ class JsonEditor {
       this.set(path, data);
       return this;
    }
-
    /**
     * Pushes the data to the bottom of the specified array
     *
@@ -307,7 +294,6 @@ class JsonEditor {
       this.set(path, data);
       return this;
    }
-
    /**
     * Remove the last item from an array
     *
@@ -326,7 +312,6 @@ class JsonEditor {
       this.set(path, data);
       return this;
    }
-
    /**
     * Removes a specific item from an array
     *
@@ -349,7 +334,6 @@ class JsonEditor {
       this.set(path, data);
       return this;
    }
-
    /**
     * Remove the first item from an array
     *
@@ -368,7 +352,6 @@ class JsonEditor {
       this.set(path, data);
       return this;
    }
-
    /**
     * Gets the keys of data from the
     *
@@ -390,14 +373,12 @@ class JsonEditor {
          return Object.keys(data);
       }
    }
-
    /**
     * Deletes the file that's being edited
     */
    delete() {
       return UniversalFileTools().deleteFile(this.path)
    }
-
    /**
     * Copy's the data from one path to a another
     * 
@@ -416,7 +397,6 @@ class JsonEditor {
       this.set(copyPath, data);
       return this;
    }
-
    /**
     * Moves the data to a new path and deletes the original
     * 
@@ -436,7 +416,6 @@ class JsonEditor {
       this.unset(oldPath);
       return this;
    }
-
    /**
     * Renames the section of an object you specify
     * 
@@ -461,7 +440,8 @@ class JsonEditor {
       return this;
    }
 }
-
+///////////////////////////////////////////////////////////////////////////
+// Function //////////////////////////////////////////////////////////////
 /**
  * Creates an editor instance for the specified file
  *
@@ -482,7 +462,7 @@ class JsonEditor {
  */
 exports.editFile = function(path, options) {
    if (!path) {
-      throw new Error("ERROR with editFile: Path is null")
+      throw new Error("ERROR with editFile: Path is null");
    }
    if (!UniversalFileTools().fileExists(path)) {
       throw new Error(`ERROR with editFile: File ${path} does not exists`);
