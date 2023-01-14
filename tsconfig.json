@@ -1,12 +1,12 @@
 {
-  "include": ["index.js"],
+  "include": ["src/**/*"],
   "compilerOptions": {
     "strict": true,
-   "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": true,
     "allowJs": true,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "outDir": "types",
+    "outDir": "dist",
     "declarationMap": true
   }
 }

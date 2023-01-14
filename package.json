@@ -1,6 +1,6 @@
 {
    "name": "@acegoal07/json-editor",
-   "version": "1.1.7",
+   "version": "1.1.8",
    "description": "A simple json file editor",
    "main": "index.js",
    "repository": {
@@ -28,7 +28,9 @@
       "@acegoal07/file-tools": "^1.0.2"
    },
    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
+      "build": "npx -p typescript tsc src/index.js --declaration --allowJs --emitDeclarationOnly --outDir types && npm run tscBuild",
+      "tscBuild": "npx tsc && npm run copy",
+      "copy": "xcopy /s/y src dist && xcopy /y package.json dist && xcopy /y readme.md dist && xcopy /y lICENSE dist"
    },
    "publishConfig": {
       "access": "public"
