@@ -12,13 +12,20 @@ const findValue = require("find-value"),
 /**
  * The json editor 
  * 
- * @version `1.1.0`
+ * @version `1.1.9`
  * @author `acegoal07`
- * 
- * @param {String} path
- * @param {Object} options
  */
 class JsonEditor {
+   /**
+    * @param {String} path 
+    * @param {{
+    *    stringify_width?: Number,
+    *    stringify_fn?: Function,
+    *    stringify_eol?: Boolean,
+    *    ignore_dots?: Boolean,
+    *    autosave?: Boolean
+    * }} options
+    */
    constructor (path, options) {
       this.options = options = options || {}
          options.stringify_width = options.stringify_width || 3
@@ -96,14 +103,19 @@ class JsonEditor {
     * Empty the JSON file content
     *
     * @param {Function} callback The callback function
+    * @returns {JsonEditor} The `JsonEditor` instance
     */
    empty(callback) {
+      if (!callback) {
+         return this.write("{}");
+      }
       return this.write("{}", callback);
    }
    /**
     * Empty an arrays content
     *
     * @param {String} path The object path
+    * @returns {JsonEditor} The `JsonEditor` instance
     */
    emptyArray(path) {
       if (!path) {
@@ -119,6 +131,7 @@ class JsonEditor {
     * Empty an objects content
     *
     * @param {String} path The object path
+    * @returns {JsonEditor} The `JsonEditor` instance
     */
    emptyObject(path) {
       if (!path) {
@@ -356,7 +369,7 @@ class JsonEditor {
     * Gets the keys of data from the
     *
     * @param {String} path An optional setting to get keys from a path
-    * @returns {Array} The keys
+    * @returns {String[]} The keys
     */
    getKeys(path = null) {
       if (!path) {
@@ -458,7 +471,7 @@ class JsonEditor {
  *  - `stringify_eol` (Boolean): Whether to add the new line at the end of the file or not (default: `false`)
  *  - `ignore_dots` (Boolean): Whether to use the path including dots or have an object structure (default: `false`)
  *  - `autosave` (Boolean): Save the file when setting some data in it
- * @returns {JsonEditor}
+ * @returns {JsonEditor} The `JsonEditor` instance
  */
 exports.editFile = function(path, options) {
    if (!path) {
