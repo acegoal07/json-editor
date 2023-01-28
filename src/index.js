@@ -6,7 +6,7 @@ const findValue = require("find-value"),
    fs = require("fs"),
    iterateObject = require("iterate-object"),
    os = require('os'),
-   { UniversalFileTools, JsonFileTools }= require("@acegoal07/file-tools");
+   { FileTools, JsonFileTools }= require("@acegoal07/file-tools");
 ///////////////////////////////////////////////////////////////////////////
 // Class /////////////////////////////////////////////////////////////////
 /**
@@ -390,7 +390,7 @@ class JsonEditor {
     * Deletes the file that's being edited
     */
    delete() {
-      return UniversalFileTools().deleteFile(this.path)
+      return FileTools().deleteFile(this.path)
    }
    /**
     * Copy's the data from one path to a another
@@ -477,7 +477,7 @@ exports.editFile = function(path, options) {
    if (!path) {
       throw new Error("ERROR with editFile: Path is null");
    }
-   if (!UniversalFileTools().fileExists(path)) {
+   if (!FileTools().fileExists(path)) {
       throw new Error(`ERROR with editFile: File ${path} does not exists`);
    }
    return new JsonEditor(path, options);
