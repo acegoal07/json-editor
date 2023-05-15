@@ -83,7 +83,7 @@ file.write(
 ## `writeCopy(path, layout)`
 **Parameters**
 * `path` - The path to the JSON file
-* `layout` - The is used to add a layout out to the data being writen to the file
+* `layout` - The is used to add a layout out to the data being written to the file
 
 **Returns**
 * Returns an instance of the `JsonEditor`

@@ -55,7 +55,7 @@ class JsonEditor {
     * Get a value in a specific path
     *
     * @param {String} path The object path
-    * @returns {Anything} The object path value
+    * @returns {any} The object path value
     */
    get(path) {
       if (path) {
@@ -210,7 +210,7 @@ class JsonEditor {
     * Set a value in a specific path
     *
     * @param {String} path The object path
-    * @param {Anything} value The value
+    * @param {any} value The value
     * @param {Object} options The options for set-value (applied only when {ignore_dots} file option is false)
     * @returns {JsonEditor} The `JsonEditor` instance
     */
@@ -249,7 +249,7 @@ class JsonEditor {
     * Pushes the data to the top of the specified array
     *
     * @param {String} path The object path
-    * @param {Anything} value The value
+    * @param {any} value The value
     * @returns {JsonEditor} The `JsonEditor` instance
     */
    push(path, value) {
@@ -291,7 +291,7 @@ class JsonEditor {
     * Pushes the data to the bottom of the specified array
     *
     * @param {String} path The object path
-    * @param {Anything} value The value
+    * @param {any} value The value
     * @returns {JsonEditor} The `JsonEditor` instance
     */
    unshift(path, value) {
