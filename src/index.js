@@ -10,14 +10,14 @@ const findValue = require("find-value"),
 ///////////////////////////////////////////////////////////////////////////
 // Class /////////////////////////////////////////////////////////////////
 /**
- * The json editor 
- * 
- * @version `1.1.9`
+ * The json editor
+ *
+ * @version `1.2.0`
  * @author `acegoal07`
  */
 class JsonEditor {
    /**
-    * @param {String} path 
+    * @param {String} path
     * @param {{
     *    stringify_width?: Number,
     *    stringify_fn?: Function,
@@ -83,7 +83,7 @@ class JsonEditor {
    }
    /**
     * Copy's the data from a file into the file your editing
-    * 
+    *
     * @param {String} path The path to the JSON file
     * @param {Boolean} layout The is used to add a layout out to the data being written to the file
     * @returns {JsonEditor} The `JsonEditor` instance
@@ -203,7 +203,7 @@ class JsonEditor {
       if (!settings.joiner) {
          throw new Error("arrayToString ERROR: joiner is null");
       }
-      if (data.length === 1) return data;
+      if (data.length === 1) {return data;}
       return data.join(settings.joiner);
    }
    /**
@@ -317,7 +317,7 @@ class JsonEditor {
       if (!path) {
          throw new Error("popLast ERROR: path is null");
       }
-      let data = this.get(path);
+      const data = this.get(path);
       if (!Array.isArray(data)) {
          throw new Error('popLast ERROR: The data is not an array');
       }
@@ -336,7 +336,7 @@ class JsonEditor {
       if (!path) {
          throw new Error("popTo ERROR: path is null");
       }
-      let data = this.get(path);
+      const data = this.get(path);
       if (!Array.isArray(data)) {
          throw new Error('popTo ERROR: The data is not an array');
       }
@@ -357,7 +357,7 @@ class JsonEditor {
       if (!path) {
          throw new Error("popFirst ERROR: path is null");
       }
-      let data = this.get(path);
+      const data = this.get(path);
       if (!Array.isArray(data)) {
          throw new Error('popFirst ERROR: The data is not an array');
       }
@@ -394,7 +394,7 @@ class JsonEditor {
    }
    /**
     * Copy's the data from one path to a another
-    * 
+    *
     * @param {String} path The object path to the data you want to copy
     * @param {String} copyPath The object path to the place you wanna put the data
     * @returns {JsonEditor} The `JsonEditor` instance
@@ -406,13 +406,13 @@ class JsonEditor {
       if (!copyPath) {
          throw new Error("copy ERROR: copyPath is null");
       }
-      let data = this.get(path);
+      const data = this.get(path);
       this.set(copyPath, data);
       return this;
    }
    /**
     * Moves the data to a new path and deletes the original
-    * 
+    *
     * @param {String} oldPath The object path to the data you want to move
     * @param {String} newPath The object path to the place you wanna put the data
     * @returns {JsonEditor} The `JsonEditor` instance
@@ -424,14 +424,14 @@ class JsonEditor {
       if (!newPath) {
          throw new Error("move ERROR: newPath is null");
       }
-      let data = this.get(oldPath);
+      const data = this.get(oldPath);
       this.set(newPath, data);
       this.unset(oldPath);
       return this;
    }
    /**
     * Renames the section of an object you specify
-    * 
+    *
     * @param {String} path The object path to the section you want to rename
     * @param {String} newName The new name you want to give the section
     * @return {JsonEditor} The `JsonEditor` instance
@@ -444,8 +444,8 @@ class JsonEditor {
          throw new Error("rename ERROR: newName is null");
       }
       // Splits path info and creates new path
-      let splitData = path.split(".");
-      let newPath = path.replace(splitData.pop(), newName);
+      const splitData = path.split(".");
+      const newPath = path.replace(splitData.pop(), newName);
       // Runs editor functions to perform change
       this.copy(path, newPath);
       this.unset(path);
