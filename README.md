@@ -14,6 +14,10 @@
 ```sh
 npm i @acegoal07/json-editor
 ```
+yarn
+```sh
+yarn add @acegoal07/json-editor
+```
 
 ## About
 This package is still a working progress so expect changes that could change how it is used
