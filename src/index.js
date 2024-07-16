@@ -6,7 +6,7 @@ const findValue = require("find-value"),
    fs = require("fs"),
    iterateObject = require("iterate-object"),
    os = require('os'),
-   { FileTools, JsonFileTools }= require("@acegoal07/file-tools");
+   { FileTools, JsonFileTools } = require("@acegoal07/file-tools");
 ///////////////////////////////////////////////////////////////////////////
 // Class /////////////////////////////////////////////////////////////////
 /**
@@ -26,12 +26,12 @@ class JsonEditor {
     *    autosave?: Boolean
     * }} options
     */
-   constructor (path, options) {
+   constructor(path, options) {
       this.options = options = options || {}
-         options.stringify_width = options.stringify_width || 3
-         options.stringify_fn = options.stringify_fn || null
-         options.stringify_eol = options.stringify_eol || false
-         options.ignore_dots = options.ignore_dots || false;
+      options.stringify_width = options.stringify_width || 3
+      options.stringify_fn = options.stringify_fn || null
+      options.stringify_eol = options.stringify_eol || false
+      options.ignore_dots = options.ignore_dots || false;
       this.path = path;
       this.data = this.read();
    }
@@ -75,9 +75,9 @@ class JsonEditor {
     */
    write(content, callback) {
       if (callback) {
-            fs.writeFile(this.path, content, callback);
+         fs.writeFile(this.path, content, callback);
       } else {
-            fs.writeFileSync(this.path, content);
+         fs.writeFileSync(this.path, content);
       }
       return this;
    }
@@ -151,15 +151,15 @@ class JsonEditor {
     */
    read(callback) {
       if (!callback) {
-            try {
-               return rJson(this.path);
-            } catch (error) {
-               return {};
-            }
+         try {
+            return rJson(this.path);
+         } catch (error) {
+            return {};
+         }
       }
       rJson(this.path, function (err, data) {
-            data = err ? {} : data;
-            callback(null, data);
+         data = err ? {} : data;
+         callback(null, data);
       })
    }
    /**
@@ -190,20 +190,15 @@ class JsonEditor {
     * @param {String} joiner The character to join the data with (default: `,`)
     * @returns {String} The data string
     */
-   arrayToString(settings = {path: null, joiner: ","}) {
-      let data;
-      if (!settings.path) {
-         data = this.data;
-      } else {
-         data = this.get(settings.path);
-      }
+   arrayToString(settings = { path: null, joiner: "," }) {
+      const data = !settings.path ? this.data : this.get(settings.path);
       if (!Array.isArray(data)) {
          throw new Error("arrayToString ERROR: The data is not an array");
       }
       if (!settings.joiner) {
          throw new Error("arrayToString ERROR: joiner is null");
       }
-      if (data.length === 1) {return data;}
+      if (data.length === 1) { return data; }
       return data.join(settings.joiner);
    }
    /**
@@ -258,11 +253,11 @@ class JsonEditor {
       }
       let data = this.get(path);
       data = (data === undefined) ? [] : data;
-         if (!Array.isArray(data)) {
-            throw new Error("push ERROR: The data is not an array");
-         }
+      if (!Array.isArray(data)) {
+         throw new Error("push ERROR: The data is not an array");
+      }
       data.push(value);
-      this.set(path,data);
+      this.set(path, data);
       return this;
    }
    /**
@@ -275,16 +270,11 @@ class JsonEditor {
       if (!path) {
          throw new Error("trigger ERROR: path is null");
       }
-      let data = this.get(path);
+      const data = this.get(path);
       if (typeof data != "boolean") {
          throw new Error("trigger ERROR: The data path leads to data that is not boolean");
       }
-      if (data) {
-         data = false;
-      } else {
-         data = true;
-      }
-      this.set(path, data);
+      this.set(path, !data);
       return this;
    }
    /**
@@ -372,25 +362,17 @@ class JsonEditor {
     * @returns {String[]} The keys
     */
    getKeys(path = null) {
-      if (!path) {
-         const data = this.data;
-         if (typeof data != "object") {
-            throw new Error("getKeys ERROR: The data is not an object");
-         }
-         return Object.keys(data);
-      } else {
-         const data = this.get(path);
-         if (typeof data != "object") {
-            throw new Error("getKeys ERROR: The data is not an object");
-         }
-         return Object.keys(data);
+      const data = !path ? this.data : this.get(path);
+      if (typeof data != "object") {
+         throw new Error("getKeys ERROR: The data is not an object");
       }
+      return Object.keys(data);
    }
    /**
     * Deletes the file that's being edited
     */
    delete() {
-      return FileTools().deleteFile(this.path)
+      return FileTools().deleteFile(this.path);
    }
    /**
     * Copy's the data from one path to a another
@@ -432,7 +414,7 @@ class JsonEditor {
    /**
     * Renames the section of an object you specify
     *
-    * @param {String} path The object path to the section you want to rename
+    * @param {String | RegExp} path The object path to the section you want to rename
     * @param {String} newName The new name you want to give the section
     * @return {JsonEditor} The `JsonEditor` instance
     */
@@ -473,7 +455,7 @@ class JsonEditor {
  *  - `autosave` (Boolean): Save the file when setting some data in it
  * @returns {JsonEditor} The `JsonEditor` instance
  */
-exports.editFile = function(path, options) {
+exports.editFile = function (path, options) {
    if (!path) {
       throw new Error("ERROR with editFile: Path is null");
    }
