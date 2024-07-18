@@ -13,16 +13,28 @@ console.log(`${topBottom}
 ${topBottom}
 |             TEST             | STATUS |
 ${topBottom}`);
-// Specified get
+// get
 try {
-   logFormatter("Specified get", file.get("check"));
+   logFormatter("get", file.get("check"));
 } catch (error) {
-   logFormatter("Specified get", false);
+   logFormatter("get", false);
 }
-// Get keys
+// write
+try {
+   file.write(`{"check2":"passed"}`);
+   if (file.get("check2") === "passed") {
+      logFormatter("Write", true);
+   } else {
+      logFormatter("Write", false);
+   }
+} catch (error) {
+   console.log(error);
+   logFormatter("Write", false);
+}
+// get keys
 try {
    const keys = file.getKeys();
-   if (keys.length === 1 && keys[0] === "check") {
+   if (keys.length === 1 && keys[0] === "check2") {
       logFormatter("Get keys", true);
    } else {
       logFormatter("Get keys", false);
