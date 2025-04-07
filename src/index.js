@@ -81,11 +81,7 @@ class JsonEditor {
     */
    writeCopy(path, layout = false) {
       if (!path) { throw new Error("writeCopy ERROR: path is null"); }
-      if (layout) {
-         this.write(JSON.stringify(JsonFileTools().readFile(path), null, 2));
-      } else {
-         this.write(JSON.stringify(JsonFileTools().readFile(path)));
-      }
+      this.write(JSON.stringify(JsonFileTools().readFile(path), null, layout ? this.options.stringify_width : null));
       return this;
    }
    /**
@@ -153,11 +149,7 @@ class JsonEditor {
     * @returns {String} The data string
     */
    toString(keepLayout = false) {
-      if (keepLayout) {
-         return JSON.stringify(JSON.parse(data), null, 2);
-      } else {
-         return JSON.stringify(this.data);
-      }
+      return JSON.stringify(this.data, null, keepLayout ? this.options.stringify_width : null);
    }
    /**
     * Returns a joined string from the array path

@@ -1,6 +1,6 @@
 {
    "name": "@acegoal07/json-editor",
-   "version": "1.2.1",
+   "version": "1.2.2",
    "description": "A simple json file editor",
    "main": "index.js",
    "repository": {
@@ -30,8 +30,6 @@
    "scripts": {
       "build": "npx -p typescript tsc src/index.js --declaration --allowJs --emitDeclarationOnly --outDir types && cls && npx tsc && cls && xcopy /s/y src dist && xcopy /y package.json dist && xcopy /y readme.md dist && xcopy /y lICENSE dist",
       "build+publish": "npm run build && cls && cd dist && cls && npm publish",
-      "runTests": "npm i && node tests/tests.js && npx rimraf node_modules && npx rimraf package-lock.json",
-      "build+test": "npm run build && cls && npm run runTests",
       "cleanOldBuilds": "npx rimraf dist && npx rimraf types"
    },
    "publishConfig": {
